@@ -1,1 +1,1 @@
-include ':sample', ':gpuv'
+include ':camera', ':gpuv'
