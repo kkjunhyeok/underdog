@@ -32,17 +32,6 @@
       app:layout_constraintRight_toRightOf="parent"
       tools:ignore="MissingConstraints" />
 
-  <ImageView
-      android:id="@+id/btn_record"
-      android:layout_width="65dp"
-      android:layout_height="65dp"
-      android:layout_alignParentBottom="true"
-      android:layout_centerInParent="true"
-      android:src="@drawable/camera"
-      app:layout_constraintBottom_toBottomOf="parent"
-      app:layout_constraintLeft_toLeftOf="parent"
-      app:layout_constraintRight_toRightOf="parent" />
-
   <TextView
       android:id="@+id/countDownTimerTextView"
       android:layout_width="wrap_content"
@@ -77,23 +66,32 @@
       android:textColor="#fff"
       android:layout_marginBottom="15dp"
       android:layout_centerHorizontal="true"
-      app:layout_constraintBottom_toTopOf="@+id/btnSelect"
+      app:layout_constraintBottom_toTopOf="@+id/btn_5sec"
       app:layout_constraintEnd_toEndOf="parent"
       app:layout_constraintStart_toStartOf="parent" />
 
-  <Button
-      android:layout_width="wrap_content"
-      android:layout_height="35dp"
-      android:text="Select Cropped"
-      android:id="@+id/btnSelect"
-      android:paddingLeft="5dp"
-      android:paddingRight="5dp"
-      android:textSize="20sp"
-      android:textColor="#fff"
-      style="@style/ButtonBorder.DarkGey"
-      app:layout_constraintBottom_toTopOf="@+id/timeView"
-      app:layout_constraintEnd_toEndOf="parent"
-      app:layout_constraintStart_toStartOf="parent" />
+  <ImageView
+      android:id="@+id/btn_record"
+      android:layout_width="65dp"
+      android:layout_height="65dp"
+      android:layout_alignParentBottom="true"
+      android:layout_centerInParent="true"
+      android:src="@drawable/camera"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent" />
+
+  <ImageView
+      android:id="@+id/btn_5sec"
+      android:layout_width="65dp"
+      android:layout_height="65dp"
+      android:layout_alignParentBottom="true"
+      android:layout_centerInParent="true"
+      android:src="@drawable/camera"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintLeft_toLeftOf="parent"
+      app:layout_constraintRight_toRightOf="parent" />
+
 
 
   <TextView

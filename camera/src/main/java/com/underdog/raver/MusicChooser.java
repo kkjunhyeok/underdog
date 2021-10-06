@@ -4,6 +4,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.View;
@@ -15,8 +16,10 @@ import com.underdog.raver.R;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MusicChooser extends AppCompatActivity {
+
 
     private ListView listView;
     private String songNames[];
@@ -37,9 +40,11 @@ public class MusicChooser extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_chooser);
         getSupportActionBar().setTitle("Choose Background Music");
+
 
         listView = findViewById(R.id.listView);
 
@@ -47,17 +52,17 @@ public class MusicChooser extends AppCompatActivity {
 
         songNames = new String[songs.size()];
 
-        for(int i=0;i<songs.size();++i){
-            songNames[i] = songs.get(i).getName().toString().replace(".mp3","");
+        for (int i = 0; i < songs.size(); ++i) {
+            songNames[i] = songs.get(i).getName().toString().replace(".mp3", "");
         }
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(),R.layout.song_layout,R.id.textView,songNames);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), R.layout.song_layout, R.id.textView, songNames);
         listView.setAdapter(adapter);
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                startActivity(new Intent(MusicChooser.this, PortraitCameraActivity.class).putExtra("position",i).putExtra("list",songs));
+                startActivity(new Intent(MusicChooser.this, PortraitCameraActivity.class).putExtra("position", i).putExtra("list", songs));
                /* Intent returnIntent = new Intent();
                 returnIntent.putExtra("position",i);
                 returnIntent.putExtra("list",songs);
@@ -68,7 +73,7 @@ public class MusicChooser extends AppCompatActivity {
     }
 
     private ArrayList<File> readSongs(File root){
-        ArrayList<File> arrayList = new ArrayList<File>();
+        ArrayList<File> arrayList = new ArrayList<>();
         File files[] = root.listFiles();
 
         for(File file : files){
@@ -82,4 +87,8 @@ public class MusicChooser extends AppCompatActivity {
         }
         return arrayList;
     }
+
+
+
+
 }

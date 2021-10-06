@@ -6,4 +6,6 @@
     <color name="DarkGrey">#fff</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorOverlay">#fff</color>
+    <color name="black">#FF000000</color>
+
 </resources>

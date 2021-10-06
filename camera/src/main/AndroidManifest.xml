@@ -5,25 +5,28 @@
     <!-- Camera permissions -->
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> <!-- Microphone permissions -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /><!-- Microphone permissions -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE" tools:ignore="ScopedStorage"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
+
+
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name="com.underdog.raver.NineRatioSixteen"></activity>
         <activity android:name="com.underdog.raver.ThreeRatioFour" />
         <activity android:name="com.underdog.raver.OneRatioOne" />
         <activity android:name="com.underdog.raver.AudioPlayer" />
-        <activity android:name="com.underdog.raver.MusicChooser" />
+        <activity android:name="com.underdog.raver.MusicChooser"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
@@ -45,7 +48,8 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="com.underdog.raver.PortraitCameraActivity"
-            android:screenOrientation="portrait" >
+            android:screenOrientation="portrait"
+            >
 
         </activity>
         <activity
@@ -53,6 +57,9 @@
             android:screenOrientation="landscape" />
         <activity android:name="com.underdog.raver.SquareCameraActivity"/>
         <activity android:name="com.underdog.raver.Mp4ComposeActivity" />
+        <activity android:name="com.underdog.raver.VideoCutter"/>
+        <activity android:name="com.underdog.raver.videoTrimmer"/>
+        <activity android:name="com.underdog.raver.PreviewActivity"/>
     </application>
 
 </manifest>

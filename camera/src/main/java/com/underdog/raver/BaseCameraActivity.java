@@ -52,6 +52,7 @@ import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 public class BaseCameraActivity extends AppCompatActivity implements View.OnClickListener,OnMenuItemClickListener{
+    private static String videoPath;
 /*
     /**---------------------------------------------------*/
 
@@ -61,7 +62,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
     static private MediaPlayer mediaPlayer;
     private Runnable runnable;
     private Handler handler;
-    private Button buttonSelect;
 
     private TextView countDownTextView;
 
@@ -80,7 +80,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
     private SampleCameraGLView sampleGLView;
     protected com.underdog.gpuv.camerarecorder.GPUCameraRecorder GPUCameraRecorder;
     private String filepath;
-    private ImageView recordBtn,pause;
+    private ImageView buttonSelect,recordBtn,pause;
     protected LensFacing lensFacing = LensFacing.BACK;
     protected int cameraWidth = 1280;
     protected int cameraHeight = 720;
@@ -108,6 +108,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
         getSupportActionBar().hide();
         recordBtn = findViewById(R.id.btn_record);
         pause = findViewById(R.id.btn_record_pause);
+        buttonSelect = findViewById(R.id.btn_5sec);
 
         settingMoviePreview = findViewById(R.id.btn_settings);
         composeVideo = findViewById(R.id.btn_compose);
@@ -171,7 +172,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
         seekBar = findViewById(R.id.seekbar);
 
         btnPlay.setOnClickListener(this);
-        buttonSelect = findViewById(R.id.btnSelect);
 
         mediaPlayer = MediaPlayer.create(this,uri);
         timer = new Timer();
@@ -211,7 +211,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        // seekbar 변
+        // seekbar
         seekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
@@ -359,10 +359,12 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 composeVideo.setVisibility(View.VISIBLE);
                 btnSwitchCamera.setVisibility(View.VISIBLE);
                 lv.setVisibility(View.INVISIBLE);
+                buttonSelect.setVisibility(View.VISIBLE);
                 seekBar.setVisibility(View.INVISIBLE);
                 btnPlay.setVisibility(View.INVISIBLE);
                 //btnRatio.setVisibility(View.VISIBLE);
 
+                startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class).putExtra("videoPath",videoPath).putExtra("uri",uri));
             }
         });
         findViewById(R.id.btn_flash).setOnClickListener(v -> {
@@ -664,14 +666,16 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
     }
 
     public static String getVideoFilePath() {
-        File dir = new File(getAndroidMoviesFolder().getAbsolutePath() + "/RAVER");
+        File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/RAVER");
 
         if (!dir.exists()){
 
             dir.mkdir();
 
         }
-        return getAndroidMoviesFolder().getAbsolutePath() + "/RAVER/" + new SimpleDateFormat("yyyyMM_dd-HHmmss").format(new Date()) + "GPUCameraRecorder.mp4";
+
+        videoPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/RAVER/" + new SimpleDateFormat("yyMMdd-HHmmss").format(new Date()) + "_ori.mp4";
+        return videoPath;
     }
 
     public static File getAndroidMoviesFolder() {
