@@ -70,6 +70,7 @@ public class videoTrimmer extends AppCompatActivity {
     File dest_mp3;
     String original_path;
 
+    final LoadingDialog loadingDialog = new LoadingDialog(videoTrimmer.this);
 
 
     @Override
@@ -82,6 +83,8 @@ public class videoTrimmer extends AppCompatActivity {
         textViewRight = findViewById(R.id.tvRight);
         rangeSeekBar = findViewById(R.id.seekbar);
         btnSave = findViewById(R.id.btnSave);
+
+
         Intent i =getIntent();
         if (i != null) {
             imagePath = i.getStringExtra("videoPath");
@@ -126,8 +129,8 @@ public class videoTrimmer extends AppCompatActivity {
                         trimVideo(rangeSeekBar.getSelectedMinValue().intValue() * 1000,
                                 rangeSeekBar.getSelectedMaxValue().intValue() * 1000, filePrefix);
 
-
-                        finish();
+                        loadingDialog.startLoadingDialog();
+//                        finish();
                         dialogInterface.dismiss();
 
                     }
@@ -226,10 +229,10 @@ public class videoTrimmer extends AppCompatActivity {
         Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
         command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", imagePath, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
-        execffmpegBinary(command);
+        execffmpegBinary_mp4(command);
 
         command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000, filePath_mp3};
-        execffmpegBinary(command_mp3);
+        execffmpegBinary_mp3(command_mp3);
 
 
     }
@@ -254,7 +257,7 @@ public class videoTrimmer extends AppCompatActivity {
             }
         }
     }
-    private void execffmpegBinary(final String[] command) {
+    private void execffmpegBinary_mp3(final String[] command) {
         Config.enableLogCallback(new LogCallback() {
             @Override
             public void apply(LogMessage message) {
@@ -284,6 +287,45 @@ public class videoTrimmer extends AppCompatActivity {
                 if (returnCode == RETURN_CODE_SUCCESS) {
                     //  progressDialog.dismiss();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
+                } else if (returnCode == RETURN_CODE_CANCEL) {
+                    Log.e(Config.TAG, "Async command execution canceled by user");
+                } else {
+                    Log.e(Config.TAG, format("Async command execution failed with returncode = %d", returnCode));
+                }
+            }
+        });
+    }
+    private void execffmpegBinary_mp4(final String[] command) {
+        Config.enableLogCallback(new LogCallback() {
+            @Override
+            public void apply(LogMessage message) {
+                Log.e(Config.TAG, message.getText());
+            }
+        });
+
+        Config.enableLogCallback(new LogCallback() {
+            @Override
+            public void apply(LogMessage message) {
+                Log.e(Config.TAG, message.getText());
+            }
+        });
+
+        Config.enableStatisticsCallback(new StatisticsCallback() {
+            @Override
+            public void apply(Statistics newStatistics) {
+
+            }
+        });
+        Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command));
+
+
+        long executionId = FFmpeg.executeAsync(command, new ExecuteCallback() {
+            @Override
+            public void apply(long executionId, int returnCode) {
+                if (returnCode == RETURN_CODE_SUCCESS) {
+                    //  progressDialog.dismiss();
+                    Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
+                    loadingDialog.dismissDialog();
                     Intent intent = new Intent(videoTrimmer.this, PreviewActivity.class);
                     intent.putExtra(FILEPATH, filePath);
                     startActivity(intent);
@@ -296,6 +338,5 @@ public class videoTrimmer extends AppCompatActivity {
             }
         });
     }
-
 
 }
