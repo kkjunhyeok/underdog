@@ -3,6 +3,7 @@ package com.underdog.raver;
 import android.net.Uri;
 import android.os.Bundle;
 import android.widget.MediaController;
+import android.widget.Toast;
 import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
@@ -18,6 +19,7 @@ public class PreviewActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        Toast.makeText(this, "동영상 자르기 완료", Toast.LENGTH_LONG).show();
 
         setContentView(R.layout.activity_preview);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);

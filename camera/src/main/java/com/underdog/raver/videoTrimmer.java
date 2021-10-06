@@ -55,6 +55,7 @@ public class videoTrimmer extends AppCompatActivity {
     Button btnSave;
     private String filePath;
     private String filePath_mp3;
+    private String filePath_merge;
 
     String imagePath;
 
@@ -64,10 +65,13 @@ public class videoTrimmer extends AppCompatActivity {
 
     int duration;
     String filePrefix;
+    String filePrefix_merge;
     String[] command;
     String[] command_mp3;
+    String[] command_merge;
     File dest;
     File dest_mp3;
+    File dest_merge;
     String original_path;
 
     final LoadingDialog loadingDialog = new LoadingDialog(videoTrimmer.this);
@@ -215,23 +219,26 @@ public class videoTrimmer extends AppCompatActivity {
             folder.mkdir();
         }
         filePrefix = fileName;
-
+        filePrefix_merge = filePrefix + "_merge";
         String fileExt = ".mp4";
         String fileExt_mp3 = ".mp3";
         System.out.println("audio"+fileExt);
         dest = new File(folder, filePrefix + fileExt);
         dest_mp3 = new File(folder, filePrefix+fileExt_mp3);
-        original_path = getRealPathFromUri(getApplicationContext(), uri);
+        dest_merge = new File(folder, filePrefix_merge + fileExt);
 
+        original_path = getRealPathFromUri(getApplicationContext(), uri);
         duration = (endMs - startMs) / 1000;
         filePath = dest.getAbsolutePath();
         filePath_mp3 = dest_mp3.getAbsolutePath();
+        filePath_merge = dest_merge.getAbsolutePath();
+
         Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
         command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", imagePath, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
         execffmpegBinary_mp4(command);
 
-        command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000, filePath_mp3};
+        command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_mp3};
         execffmpegBinary_mp3(command_mp3);
 
 
@@ -325,10 +332,27 @@ public class videoTrimmer extends AppCompatActivity {
                 if (returnCode == RETURN_CODE_SUCCESS) {
                     //  progressDialog.dismiss();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
-                    loadingDialog.dismissDialog();
-                    Intent intent = new Intent(videoTrimmer.this, PreviewActivity.class);
-                    intent.putExtra(FILEPATH, filePath);
-                    startActivity(intent);
+                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
+//                    ffmpeg -i video.mkv -i audio.m4a -filter_complex "[0:a][1:a]amerge=inputs=2[a]"-map 0:v -map "[a]" -c:v copy -ac 2 -shortest output.mkv
+
+                    Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command_merge));
+
+                    int rc = FFmpeg.execute(command_merge);
+
+                    if (rc == RETURN_CODE_SUCCESS) {
+                        Log.i(Config.TAG, "Command execution completed successfully.");
+                        loadingDialog.dismissDialog();
+                        Intent intent = new Intent(videoTrimmer.this, PreviewActivity.class);
+                        intent.putExtra(FILEPATH, filePath_merge);
+                        startActivity(intent);
+
+                    } else if (rc == RETURN_CODE_CANCEL) {
+                        Log.i(Config.TAG, "Command execution cancelled by user.");
+                    } else {
+                        Log.i(Config.TAG, String.format("Command execution failed with rc=%d and the output below.", rc));
+                        Config.printLastCommandOutput(Log.INFO);
+                    }
+
 
                 } else if (returnCode == RETURN_CODE_CANCEL) {
                     Log.e(Config.TAG, "Async command execution canceled by user");
