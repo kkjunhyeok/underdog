@@ -1,6 +1,8 @@
 package com.underdog.raver;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -10,10 +12,15 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager.widget.ViewPager;
 
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
+
+import me.relex.circleindicator.CircleIndicator;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -37,7 +44,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
     }
-
 
     @Override
     protected void onResume() {
@@ -83,10 +89,10 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to exit?")
-                .setTitle("Really Exit?")
+        builder.setMessage("종료")
+                .setTitle("정말 종료하시겠습니까?")
                 .setCancelable(false)
-                .setPositiveButton("Exit", new DialogInterface.OnClickListener() {
+                .setPositiveButton("종료", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent homeIntent = new Intent(Intent.ACTION_MAIN);
                         homeIntent.addCategory( Intent.CATEGORY_HOME );
@@ -94,7 +100,7 @@ public class MainActivity extends AppCompatActivity {
                         startActivity(homeIntent);
                     }
                 })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                .setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         dialog.cancel();
                     }

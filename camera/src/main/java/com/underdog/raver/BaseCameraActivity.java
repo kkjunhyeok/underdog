@@ -323,7 +323,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 running = true;
                 filepath = getVideoFilePath();
                 GPUCameraRecorder.start(filepath);
-                Toast.makeText(BaseCameraActivity.this, "Recording Started", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseCameraActivity.this, "녹화 시작", Toast.LENGTH_SHORT).show();
                 recordBtn.setVisibility(View.GONE);
                 pause.setVisibility(View.VISIBLE);
                 timeView.setVisibility(View.VISIBLE);
@@ -346,7 +346,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
             public void onClick(View view) {
                 running = false;
                 GPUCameraRecorder.stop();
-                Toast.makeText(BaseCameraActivity.this, "Recording Stopped", Toast.LENGTH_SHORT).show();
+                Toast.makeText(BaseCameraActivity.this, "녹화 종료", Toast.LENGTH_SHORT).show();
                 recordBtn.setVisibility(View.VISIBLE);
                 pause.setVisibility(View.INVISIBLE);
                 lv.setVisibility(View.VISIBLE);
@@ -364,7 +364,8 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 btnPlay.setVisibility(View.INVISIBLE);
                 //btnRatio.setVisibility(View.VISIBLE);
 
-                startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class).putExtra("videoPath",videoPath).putExtra("uri",uri));
+                startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class)
+                        .putExtra("videoPath",videoPath).putExtra("uri",uri));
             }
         });
         findViewById(R.id.btn_flash).setOnClickListener(v -> {

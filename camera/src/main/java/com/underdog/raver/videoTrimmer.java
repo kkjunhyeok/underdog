@@ -14,6 +14,8 @@ import android.provider.MediaStore;
 import android.text.InputType;
 import android.util.Log;
 import android.view.Gravity;
+import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,6 +83,10 @@ public class videoTrimmer extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_trim);
+        getSupportActionBar().setTitle("영상 자르기");
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+
         imageView = findViewById(R.id.pause);
         videoView = findViewById(R.id.videoView);
         textViewLeft = findViewById(R.id.tvLeft);
@@ -113,7 +119,7 @@ public class videoTrimmer extends AppCompatActivity {
                 input.setLayoutParams(lp);
                 input.setGravity(Gravity.TOP | Gravity.START);
 //                input.setInputType(InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-                input.setPrivateImeOptions("defaultInputmode=korean;");
+                input.setPrivateImeOptions("defaultInputmode=english;");
                 linearLayout.addView(input, lp);
                 alert.setTitle("저장");
                 alert.setMessage("영상 제목을 정하시겠습니까?");
@@ -218,7 +224,7 @@ public class videoTrimmer extends AppCompatActivity {
         if (!folder.exists()) {
             folder.mkdir();
         }
-        filePrefix = fileName;
+        filePrefix = fileName + "_trim";
         filePrefix_merge = filePrefix + "_merge";
         String fileExt = ".mp4";
         String fileExt_mp3 = ".mp3";
@@ -233,7 +239,7 @@ public class videoTrimmer extends AppCompatActivity {
         filePath_mp3 = dest_mp3.getAbsolutePath();
         filePath_merge = dest_merge.getAbsolutePath();
 
-        Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
         command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", imagePath, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
         execffmpegBinary_mp4(command);
@@ -362,5 +368,51 @@ public class videoTrimmer extends AppCompatActivity {
             }
         });
     }
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+                builder.setMessage("정말 이전으로 가겠습니까?\n작업 내용이 사라질 수 있습니다.")
+                        .setTitle("뒤로가기")
+                        .setCancelable(false)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                androidx.appcompat.app.AlertDialog alert = builder.create();
+                alert.show();
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_BACK:
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+                builder.setMessage("정말 이전으로 가겠습니까?\n작업 내용이 사라질 수 있습니다.")
+                        .setTitle("뒤로가기")
+                        .setCancelable(false)
+                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                finish();
+                            }
+                        })
+                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+                androidx.appcompat.app.AlertDialog alert = builder.create();
+                alert.show();
+                break;
+        }
+        return false;
+    }
 }

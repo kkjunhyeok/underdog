@@ -29,10 +29,10 @@ public class MusicChooser extends AppCompatActivity {
         super.onStart();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("You Can Edit Music Later Next OR Record without Music..")
-                .setTitle("Here is you Music List")
+        builder.setMessage("음악 선택 후 동영상 촬영이 가능합니다.")
+                .setTitle("녹화시 사용할 BGM 선택")
                 .setCancelable(true)
-                .setPositiveButton("OK", (dialog, id) -> {
+                .setPositiveButton("확인", (dialog, id) -> {
                 });
         AlertDialog alert = builder.create();
         alert.show();
@@ -43,7 +43,7 @@ public class MusicChooser extends AppCompatActivity {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_music_chooser);
-        getSupportActionBar().setTitle("Choose Background Music");
+        getSupportActionBar().setTitle("BGM 선택");
 
 
         listView = findViewById(R.id.listView);
