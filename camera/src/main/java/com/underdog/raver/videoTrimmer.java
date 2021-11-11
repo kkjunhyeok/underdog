@@ -47,7 +47,7 @@ import static java.lang.String.format;
 
 public class videoTrimmer extends AppCompatActivity {
 
-    Uri uri;
+    Uri uri_video;
     Uri uri_mp3;
     ImageView imageView;
     VideoView videoView;
@@ -59,7 +59,7 @@ public class videoTrimmer extends AppCompatActivity {
     private String filePath_mp3;
     private String filePath_merge;
 
-    String imagePath;
+    String ori_Path;
 
     private static final String FILEPATH = "filepath";
 
@@ -97,11 +97,11 @@ public class videoTrimmer extends AppCompatActivity {
 
         Intent i =getIntent();
         if (i != null) {
-            imagePath = i.getStringExtra("videoPath");
-            uri_mp3 = i.getParcelableExtra("uri");
-            uri = Uri.parse(imagePath);
+            ori_Path = i.getStringExtra("videoPath");
+            uri_mp3 = i.getParcelableExtra("uri_mp3");
+            uri_video = Uri.parse(ori_Path);
             isPlaying = true;
-            videoView.setVideoURI(uri);
+            videoView.setVideoURI(uri_video);
             videoView.start();
         }
         setListeners();
@@ -233,7 +233,6 @@ public class videoTrimmer extends AppCompatActivity {
         dest_mp3 = new File(folder, filePrefix+fileExt_mp3);
         dest_merge = new File(folder, filePrefix_merge + fileExt);
 
-        original_path = getRealPathFromUri(getApplicationContext(), uri);
         duration = (endMs - startMs) / 1000;
         filePath = dest.getAbsolutePath();
         filePath_mp3 = dest_mp3.getAbsolutePath();
@@ -241,10 +240,13 @@ public class videoTrimmer extends AppCompatActivity {
 
         //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
-        command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", imagePath, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
+        command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
+
         execffmpegBinary_mp4(command);
 
         command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_mp3};
+       // command_mp3 = new String[]{"-i", String.valueOf(uri_mp3), "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", filePath_mp3};
+
         execffmpegBinary_mp3(command_mp3);
 
 
@@ -331,33 +333,34 @@ public class videoTrimmer extends AppCompatActivity {
         });
         Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command));
 
-
         long executionId = FFmpeg.executeAsync(command, new ExecuteCallback() {
             @Override
             public void apply(long executionId, int returnCode) {
                 if (returnCode == RETURN_CODE_SUCCESS) {
                     //  progressDialog.dismiss();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
-                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
-//                    ffmpeg -i video.mkv -i audio.m4a -filter_complex "[0:a][1:a]amerge=inputs=2[a]"-map 0:v -map "[a]" -c:v copy -ac 2 -shortest output.mkv
 
-                    Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command_merge));
-
-                    int rc = FFmpeg.execute(command_merge);
-
-                    if (rc == RETURN_CODE_SUCCESS) {
-                        Log.i(Config.TAG, "Command execution completed successfully.");
-                        loadingDialog.dismissDialog();
-                        Intent intent = new Intent(videoTrimmer.this, PreviewActivity.class);
-                        intent.putExtra(FILEPATH, filePath_merge);
-                        startActivity(intent);
-
-                    } else if (rc == RETURN_CODE_CANCEL) {
-                        Log.i(Config.TAG, "Command execution cancelled by user.");
-                    } else {
-                        Log.i(Config.TAG, String.format("Command execution failed with rc=%d and the output below.", rc));
-                        Config.printLastCommandOutput(Log.INFO);
-                    }
+                    /*영상 합치기 나중에 */
+//                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
+////                    ffmpeg -i video.mkv -i audio.m4a -filter_complex "[0:a][1:a]amerge=inputs=2[a]"-map 0:v -map "[a]" -c:v copy -ac 2 -shortest output.mkv
+//
+//                    Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command_merge));
+//
+//                    int rc = FFmpeg.execute(command_merge);
+//
+//                    if (rc == RETURN_CODE_SUCCESS) {
+//                        Log.i(Config.TAG, "Command execution completed successfully.");
+//                        loadingDialog.dismissDialog();
+//                        Intent intent = new Intent(videoTrimmer.this, PreviewActivity.class);
+//                        intent.putExtra(FILEPATH, filePath_merge);
+//                        startActivity(intent);
+//
+//                    } else if (rc == RETURN_CODE_CANCEL) {
+//                        Log.i(Config.TAG, "Command execution cancelled by user.");
+//                    } else {
+//                        Log.i(Config.TAG, String.format("Command execution failed with rc=%d and the output below.", rc));
+//                        Config.printLastCommandOutput(Log.INFO);
+//                    }
 
 
                 } else if (returnCode == RETURN_CODE_CANCEL) {

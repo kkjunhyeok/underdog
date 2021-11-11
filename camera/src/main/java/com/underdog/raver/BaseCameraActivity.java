@@ -101,8 +101,9 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
 
     private ListView lv;
     private ImageView btnRatio;
-
     private String sound_url = null;
+    String path_mp3;
+    Uri uri_mp3;
 
     protected void onCreateActivity () {
         getSupportActionBar().hide();
@@ -159,12 +160,11 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
             mediaPlayer.release();
         }
 
-        Bundle bundle = getIntent().getExtras();
-
-        ArrayList<File> songs = (ArrayList) bundle.getParcelableArrayList("list");
-        int position = bundle.getInt("position");
-        Uri uri = Uri.parse(songs.get(position).toString());
-
+        Intent i =getIntent();
+        if (i != null) {
+            path_mp3= i.getStringExtra("music_path");
+            uri_mp3=Uri.parse(path_mp3); //mp3 파일경로
+        }
 
         btnPlay = findViewById(R.id.btnPlay);
 
@@ -173,7 +173,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
 
         btnPlay.setOnClickListener(this);
 
-        mediaPlayer = MediaPlayer.create(this,uri);
+        mediaPlayer = MediaPlayer.create(this,uri_mp3);
         timer = new Timer();
 
 
@@ -365,7 +365,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 //btnRatio.setVisibility(View.VISIBLE);
 
                 startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class)
-                        .putExtra("videoPath",videoPath).putExtra("uri",uri));
+                        .putExtra("videoPath",videoPath).putExtra("uri_mp3",uri_mp3));
             }
         });
         findViewById(R.id.btn_flash).setOnClickListener(v -> {
