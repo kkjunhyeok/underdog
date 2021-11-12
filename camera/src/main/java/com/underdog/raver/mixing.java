@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -37,12 +38,15 @@ import java.util.TimerTask;
 
 public class mixing extends AppCompatActivity {
 
-    SeekBar change_vol, change_mix, play_vol, play_mix;
-    Button btn_set_vol, btn_set_mix, btn_play_vol, btn_play_mix;
+    private SeekBar change_vol, change_mix, play_vol, play_mix;
+    private Button btn_set_vol, btn_set_mix, btn_play_vol, btn_play_mix;
     Button btn_merge, btn_save;
     TextView num_vol, num_mix;
     String[] command;
-    static private MediaPlayer mediaPlayer_mp3, mediaPlayer_mp4;
+    private MediaPlayer mediaPlayer_mp3, mediaPlayer_mp4;
+    Uri uri_mp3 ; //바꾸는거 mp3
+    private Handler handler;
+    private Runnable runnable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -58,15 +62,22 @@ public class mixing extends AppCompatActivity {
 
 
         Uri uri_video = Uri.parse(videoPath);
-        Uri uri_mp3 = Uri.parse(changedmp3); //바꾸는거 mp3
         Uri uri_ori = Uri.parse(mp3Path);
+        uri_mp3 = Uri.parse(changedmp3);
 
         num_vol=findViewById(R.id.num_vol); //옆에 뜨는 숫자
         change_vol=findViewById(R.id.seek_bgm);
         btn_set_vol=findViewById(R.id.set_bgm);
         btn_play_vol=findViewById(R.id.play_bgm);
+        play_vol=findViewById(R.id.play_bgm_seek);
 
-        mediaPlayer_mp3 = MediaPlayer.create(this,uri_ori);
+        TextView time_vol = (TextView)findViewById(R.id.textView6);
+        handler = new Handler();
+
+        mediaPlayer_mp3 = MediaPlayer.create(this,uri_mp3);
+        play_vol.setMax(mediaPlayer_mp3.getDuration());
+
+
         change_vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -80,44 +91,50 @@ public class mixing extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
+
+
         btn_set_vol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                int volvalue = Integer.parseInt(num_vol.getText().toString());
+                float volvalue = Float.parseFloat(num_vol.getText().toString());
 
                 //ffmpeg -y -i 1.mp4 -filter:a volume=2.0 -c:v copy -c:a aac -map 0 result.mp4
-                File file = new File(changedmp3);
-                if(file.exists()) {
-                    file.delete();
-                    command = new String[]{"-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
-                    //command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,"-c:v","copy","-c:a","aac","-map","0",changedmp3};
-                    execffmpegBinary(command);
-                }else{
-                    command = new String[]{"-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
-                    //command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,"-c:v","copy","-c:a","aac","-map","0",changedmp3};
-                    execffmpegBinary(command);
-                }
-                mediaPlayer_mp3 = MediaPlayer.create(getBaseContext(),uri_mp3);
-
+//                File file = new File(changedmp3);
+////                if(file.exists()) {
+////                    file.delete();
+////                    command = new String[]{"-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
+////                    //command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,"-c:v","copy","-c:a","aac","-map","0",changedmp3};
+////                    execffmpegBinary(command);
+////                }else{
+////                    command = new String[]{"-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
+////                    //command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,"-c:v","copy","-c:a","aac","-map","0",changedmp3};
+////                    execffmpegBinary(command);
+////                }
+                command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
+                execffmpegBinary(command);
+                mediaPlayer_mp3 = MediaPlayer.create(getApplicationContext(),uri_mp3);
+                btn_play_vol.setText(">");
 
             }
 
         });
         mediaPlayer_mp3.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
-            public void onPrepared(MediaPlayer mediaPlayer) {
-                mediaPlayer.start();
-                mediaPlayer.pause();
+            public void onPrepared(MediaPlayer mediaPlayer_mp3) {
+                mediaPlayer_mp3.start();
+                mediaPlayer_mp3.pause();
 
                 btn_play_vol.setOnClickListener(new View.OnClickListener() {
+
                     @Override
                     public void onClick(View v) {
                         if(btn_play_vol.getText().toString().equals(">")) {
                             mediaPlayer_mp3.start();
                             btn_play_vol.setText("||");
+                            changeSeekbar();
                         }
                         else{
-                            mediaPlayer_mp3.stop();
+                            mediaPlayer_mp3.pause();
                             btn_play_vol.setText(">");
                         }
                     }
@@ -128,9 +145,52 @@ public class mixing extends AppCompatActivity {
 
 
 
+        play_vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                if(fromUser){
+                    mediaPlayer_mp3.seekTo(progress);
+                }
+                int m = progress / 60000;
+                int s = (progress % 60000) / 1000;
+                String strTime = String.format("%02d:%02d", m, s);
+                time_vol.setText(strTime);
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+
 
 
     }
+
+
+    public void changeSeekbar(){
+        play_vol.setProgress(mediaPlayer_mp3.getCurrentPosition());
+        if(mediaPlayer_mp3.isPlaying()){
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    changeSeekbar();
+                }
+            };
+            handler.postDelayed(runnable,1000);
+        }
+    }
+
+
+
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){

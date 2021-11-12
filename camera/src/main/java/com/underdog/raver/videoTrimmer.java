@@ -58,6 +58,7 @@ public class videoTrimmer extends AppCompatActivity {
     private String filePath;
     private String filePath_mp3;
     private String filePath_merge;
+    private String filePath_change;
 
     String ori_Path;
 
@@ -67,13 +68,16 @@ public class videoTrimmer extends AppCompatActivity {
 
     int duration;
     String filePrefix;
+    String filePrefix_change;
     String filePrefix_merge;
     String[] command;
     String[] command_mp3;
     String[] command_merge;
+    String[] command_mp3_change;
     File dest;
     File dest_mp3;
     File dest_merge;
+    File dest_change;
     String original_path;
 
     final LoadingDialog loadingDialog = new LoadingDialog(videoTrimmer.this);
@@ -225,18 +229,21 @@ public class videoTrimmer extends AppCompatActivity {
             folder.mkdir();
         }
         filePrefix = fileName + "_trim";
+        filePrefix_change = fileName+"_changeVol";
         filePrefix_merge = filePrefix + "_merge";
         String fileExt = ".mp4";
         String fileExt_mp3 = ".mp3";
         System.out.println("audio"+fileExt);
         dest = new File(folder, filePrefix + fileExt);
         dest_mp3 = new File(folder, filePrefix+fileExt_mp3);
+        dest_change = new File(folder, filePrefix_change+fileExt_mp3);
         dest_merge = new File(folder, filePrefix_merge + fileExt);
 
         duration = (endMs - startMs) / 1000;
         filePath = dest.getAbsolutePath();
         filePath_mp3 = dest_mp3.getAbsolutePath();
         filePath_merge = dest_merge.getAbsolutePath();
+        filePath_change = dest_change.getAbsolutePath();
 
         //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
@@ -245,9 +252,12 @@ public class videoTrimmer extends AppCompatActivity {
         execffmpegBinary_mp4(command);
 
         command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_mp3};
-       // command_mp3 = new String[]{"-i", String.valueOf(uri_mp3), "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", filePath_mp3};
+        command_mp3_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_change};
+
+        // command_mp3 = new String[]{"-i", String.valueOf(uri_mp3), "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", filePath_mp3};
 
         execffmpegBinary_mp3(command_mp3);
+        execffmpegBinary_mp3(command_mp3_change);
 
 
     }
@@ -347,7 +357,8 @@ public class videoTrimmer extends AppCompatActivity {
 //                        intent.putExtra(FILEPATH, filePath_merge);
 //                        startActivity(intent);
                     /*영상 합치기 나중에 */
-//                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
+////                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
+//                    command_merge = new String[]{"-i",filePath,"-i",filePath_mp3,"-vcodec","copy", "-filter_complex","amix","-map","0:v","-map","0:a","-map","1:a","-shortest","-b:a","144k",filePath_merge};
 ////                    ffmpeg -i video.mkv -i audio.m4a -filter_complex "[0:a][1:a]amerge=inputs=2[a]"-map 0:v -map "[a]" -c:v copy -ac 2 -shortest output.mkv
 //
 //                    Log.d(TAG, "Started command : ffmpeg " + Arrays.toString(command_merge));
