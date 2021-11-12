@@ -338,8 +338,14 @@ public class videoTrimmer extends AppCompatActivity {
             public void apply(long executionId, int returnCode) {
                 if (returnCode == RETURN_CODE_SUCCESS) {
                     //  progressDialog.dismiss();
+                    loadingDialog.dismissDialog();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
+                    Intent intent = new Intent(videoTrimmer.this, mixing.class);
+                    intent.putExtra("videoPath",filePath).putExtra("mp3Path",filePath_mp3);
+                    startActivity(intent);
 
+//                        intent.putExtra(FILEPATH, filePath_merge);
+//                        startActivity(intent);
                     /*영상 합치기 나중에 */
 //                    command_merge = new String[]{"-i", "" + filePath, "-i", "" + filePath_mp3,"-filter_complex","[0:a][1:a]amerge=inputs=2[a]","-map","0:v","-map","[a]","-c:v","copy","-ac","2","-shortest",filePath_merge};
 ////                    ffmpeg -i video.mkv -i audio.m4a -filter_complex "[0:a][1:a]amerge=inputs=2[a]"-map 0:v -map "[a]" -c:v copy -ac 2 -shortest output.mkv

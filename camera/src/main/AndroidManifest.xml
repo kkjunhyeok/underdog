@@ -59,6 +59,8 @@
         <activity android:name="com.underdog.raver.Mp4ComposeActivity" />
         <activity android:name="com.underdog.raver.videoTrimmer"/>
         <activity android:name="com.underdog.raver.PreviewActivity"/>
+        <activity android:name="com.underdog.raver.mixing"/>
+
     </application>
 
 </manifest>
