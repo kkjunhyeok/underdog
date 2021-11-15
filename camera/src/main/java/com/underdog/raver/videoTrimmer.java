@@ -57,8 +57,8 @@ public class videoTrimmer extends AppCompatActivity {
     Button btnSave;
     private String filePath;
     private String filePath_mp3;
-    private String filePath_merge;
-    private String filePath_change;
+    private String filePath_mp4_change;
+    private String filePath_mp3_change;
 
     String ori_Path;
 
@@ -74,10 +74,8 @@ public class videoTrimmer extends AppCompatActivity {
     String[] command_mp3;
     String[] command_merge;
     String[] command_mp3_change;
-    File dest;
-    File dest_mp3;
-    File dest_merge;
-    File dest_change;
+    String[] command_mp4_change;
+    File dest, dest_mp3, dest_merge, dest_change_mp3, dest_change_mp4;
     String original_path;
 
     final LoadingDialog loadingDialog = new LoadingDialog(videoTrimmer.this);
@@ -236,23 +234,25 @@ public class videoTrimmer extends AppCompatActivity {
         System.out.println("audio"+fileExt);
         dest = new File(folder, filePrefix + fileExt);
         dest_mp3 = new File(folder, filePrefix+fileExt_mp3);
-        dest_change = new File(folder, filePrefix_change+fileExt_mp3);
+        dest_change_mp3 = new File(folder, filePrefix_change+fileExt_mp3);
+        dest_change_mp4 = new File(folder, filePrefix_change+fileExt);
         dest_merge = new File(folder, filePrefix_merge + fileExt);
 
         duration = (endMs - startMs) / 1000;
         filePath = dest.getAbsolutePath();
         filePath_mp3 = dest_mp3.getAbsolutePath();
-        filePath_merge = dest_merge.getAbsolutePath();
-        filePath_change = dest_change.getAbsolutePath();
-
+        //filePath_merge = dest_merge.getAbsolutePath();
+        filePath_mp3_change = dest_change_mp3.getAbsolutePath();
+        filePath_mp4_change = dest_change_mp4.getAbsolutePath();
         //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
         command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
-
+        command_mp4_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath_mp4_change};
         execffmpegBinary_mp4(command);
+        execffmpegBinary_mp4(command_mp4_change);
 
         command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_mp3};
-        command_mp3_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_change};
+        command_mp3_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs - startMs) / 1000,"-ac","1", filePath_mp3_change};
 
         // command_mp3 = new String[]{"-i", String.valueOf(uri_mp3), "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", filePath_mp3};
 
