@@ -53,6 +53,7 @@ public class mixing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixing);
         getSupportActionBar().setTitle("믹싱");
+        handler = new Handler();
 
         Toast.makeText(this, "동영상 자르기 완료", Toast.LENGTH_LONG).show();
 
@@ -72,12 +73,13 @@ public class mixing extends AppCompatActivity {
         play_vol=findViewById(R.id.play_bgm_seek);
 
         TextView time_vol = (TextView)findViewById(R.id.textView6);
-        handler = new Handler();
 
+
+
+        //볼륨조절쪽
         mediaPlayer_mp3 = MediaPlayer.create(this,uri_mp3);
         play_vol.setMax(mediaPlayer_mp3.getDuration());
-
-
+        //볼륨값
         change_vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -91,8 +93,7 @@ public class mixing extends AppCompatActivity {
             public void onStopTrackingTouch(SeekBar seekBar) {
             }
         });
-
-
+        //설정버튼
         btn_set_vol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,14 +111,19 @@ public class mixing extends AppCompatActivity {
 ////                    //command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,"-c:v","copy","-c:a","aac","-map","0",changedmp3};
 ////                    execffmpegBinary(command);
 ////                }
+                mediaPlayer_mp3.stop();
                 command = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
                 execffmpegBinary(command);
-                mediaPlayer_mp3 = MediaPlayer.create(getApplicationContext(),uri_mp3);
+
                 btn_play_vol.setText(">");
+                time_vol.setText("00:00");
+
+//
 
             }
 
         });
+        //
         mediaPlayer_mp3.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
             @Override
             public void onPrepared(MediaPlayer mediaPlayer_mp3) {
@@ -142,9 +148,6 @@ public class mixing extends AppCompatActivity {
 
             }
         });
-
-
-
         play_vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
@@ -266,8 +269,37 @@ public class mixing extends AppCompatActivity {
             @Override
             public void apply(long executionId, int returnCode) {
                 if (returnCode == RETURN_CODE_SUCCESS) {
-                    //  progressDialog.dismiss();
+                    //  progressDialog.dismiss();료
+                    Toast.makeText(getApplicationContext(), "변경 완료", Toast.LENGTH_SHORT).show();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
+                    mediaPlayer_mp3 = MediaPlayer.create(getApplicationContext(),uri_mp3);
+                    mediaPlayer_mp3.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
+                        @Override
+                        public void onPrepared(MediaPlayer mediaPlayer_mp3) {
+                            mediaPlayer_mp3.start();
+                            mediaPlayer_mp3.pause();
+
+                            btn_play_vol.setOnClickListener(new View.OnClickListener() {
+
+                                @Override
+                                public void onClick(View v) {
+                                    if(btn_play_vol.getText().toString().equals(">")) {
+                                        mediaPlayer_mp3.start();
+                                        btn_play_vol.setText("||");
+                                        changeSeekbar();
+                                    }
+                                    else{
+                                        mediaPlayer_mp3.pause();
+                                        btn_play_vol.setText(">");
+                                    }
+                                }
+                            });
+
+                        }
+                    });
+
+                    mediaPlayer_mp3.seekTo(0);
+                    play_vol.setProgress(0);
                 } else if (returnCode == RETURN_CODE_CANCEL) {
                     Log.e(Config.TAG, "Async command execution canceled by user");
                 } else {
