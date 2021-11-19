@@ -228,11 +228,21 @@ public class mixing extends AppCompatActivity {
         btn_set_mix.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float mixvalue = Float.parseFloat(num1.getText().toString());
                 mediaPlayer_mp4.stop();
                 cmd_type = "mix";
+
+                float num_vol = Float.parseFloat(num1.getText().toString());
+                float num_eq = Float.parseFloat(num2.getText().toString());
+                float num_comp = Float.parseFloat(num3.getText().toString());
+                float num_low = Float.parseFloat(num4.getText().toString());
+                float num_echo = Float.parseFloat(num5.getText().toString());
+
                 //command_mix = new String[]{"-y","-i",videoPath,"-filter:a","volume="+mixvalue/50,changedmp4};
-                command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", changedmp4};
+                command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                        "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+num_eq/100+", "+
+                        "volume="+num_vol/50+", "+
+                        "aecho=0.8:0.9:1000:"+num_echo/100,changedmp4 };
+
                 execffmpegBinary_merge(command_mix);
 
                 btn_play_mix.setText(">");

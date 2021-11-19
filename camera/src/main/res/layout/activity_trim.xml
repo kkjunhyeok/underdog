@@ -39,7 +39,8 @@
             android:layout_below="@+id/seekbar"
             android:layout_marginLeft="10dp"
             android:text="00:00:00"
-            android:textSize="10dp" />
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
 
         <TextView
             android:id="@+id/tvRight"
@@ -51,7 +52,8 @@
             android:layout_marginRight="17dp"
             android:gravity="end"
             android:text="00:00:00"
-            android:textSize="17sp" />
+            android:textColor="#FFFFFF"
+            android:textSize="10sp" />
 
         <org.florescu.android.rangeseekbar.RangeSeekBar
             android:id="@+id/seekbar"

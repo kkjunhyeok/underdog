@@ -199,7 +199,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
-                                mediaPlayer.start();
+//                                mediaPlayer.start();
                             }
                         },6000);
 
@@ -323,6 +323,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 running = true;
                 filepath = getVideoFilePath();
                 GPUCameraRecorder.start(filepath);
+                mediaPlayer.start();
                 Toast.makeText(BaseCameraActivity.this, "녹화 시작", Toast.LENGTH_SHORT).show();
                 recordBtn.setVisibility(View.GONE);
                 pause.setVisibility(View.VISIBLE);
