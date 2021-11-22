@@ -51,7 +51,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
-public class BaseCameraActivity extends AppCompatActivity implements View.OnClickListener,OnMenuItemClickListener{
+public class BaseCameraActivity extends AppCompatActivity implements View.OnClickListener{
     private static String videoPath;
 /*
     /**---------------------------------------------------*/
@@ -87,20 +87,17 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
     protected int videoWidth = 720;
     public TextView timeView;
     protected int videoHeight = 720;
+
     private ImageView btnSwitchCamera;
     private Button addMusic;
     private Button filter;
     private Button cancelList;
-
     private ImageView flashOn;
     private ImageView btnFlash;
-    private Button composeVideo;
-    private ImageView settingMoviePreview;
 
     private boolean toggleClick = false;
 
     private ListView lv;
-    private ImageView btnRatio;
     private String sound_url = null;
     String path_mp3;
     Uri uri_mp3;
@@ -111,14 +108,11 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
         pause = findViewById(R.id.btn_record_pause);
         buttonSelect = findViewById(R.id.btn_5sec);
 
-        settingMoviePreview = findViewById(R.id.btn_settings);
-        composeVideo = findViewById(R.id.btn_compose);
         timeView = (TextView)findViewById(R.id.timeView);
+        cancelList=findViewById(R.id.cancel_list);
         filter = findViewById(R.id.btn_filter);
-        cancelList = findViewById(R.id.cancel_list);
         flashOn = findViewById(R.id.btn_flash_on);
         btnFlash = findViewById(R.id.btn_flash);
-        btnRatio = findViewById(R.id.btn_ratio);
 
 
         //------------------------------------------------------------------------------------------------------
@@ -195,7 +189,8 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                         //recordBtn.performClick();
                         seekBar.setVisibility(View.INVISIBLE);
                         countDownTimer.start();
-
+                        mediaPlayer.start();
+                        mediaPlayer.pause();
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
@@ -203,7 +198,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                             }
                         },6000);
 
-                        mediaPlayer.pause();
                     }
                 });
 
@@ -233,25 +227,8 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
         //-------------------------------------------------------------------------------------------------------------------------
 
 
-        btnRatio.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                PopupMenu popup = new PopupMenu(BaseCameraActivity.this,view);
-                popup.setOnMenuItemClickListener(BaseCameraActivity.this);
-                popup.inflate(R.menu.popup_menu);
-                
-                popup.show();
 
-            }
-        });
 
-        settingMoviePreview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BaseCameraActivity.this,PlayerActivity.class);
-                startActivity(intent);
-            }
-        });
 
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -263,13 +240,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
             }
         });
 
-        composeVideo.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(BaseCameraActivity.this,Mp4ComposeActivity.class);
-                startActivity(intent);
-            }
-        });
 
         cancelList.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -308,13 +278,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
             Intent intent = new Intent(BaseCameraActivity.this,MusicChooser.class);
             startActivity(intent);
 
-            /**captureBitmap(bitmap -> {
-             new Handler().post(() -> {
-             String imagePath = getImageFilePath();
-             saveAsPngImage(bitmap, imagePath);
-             exportPngToGallery(getApplicationContext(), imagePath);
-             });
-             });*/
         });
 
         recordBtn.setOnClickListener(new View.OnClickListener() {
@@ -324,21 +287,18 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 filepath = getVideoFilePath();
                 GPUCameraRecorder.start(filepath);
                 mediaPlayer.start();
-                Toast.makeText(BaseCameraActivity.this, "녹화 시작", Toast.LENGTH_SHORT).show();
+
+//                Toast.makeText(BaseCameraActivity.this, "녹화 시작", Toast.LENGTH_SHORT).show();
                 recordBtn.setVisibility(View.GONE);
                 pause.setVisibility(View.VISIBLE);
                 timeView.setVisibility(View.VISIBLE);
                 addMusic.setVisibility(View.INVISIBLE);
                 btnSwitchCamera.setVisibility(View.INVISIBLE);
                 filter.setVisibility(View.INVISIBLE);
-                settingMoviePreview.setVisibility(View.INVISIBLE);
-                composeVideo.setVisibility(View.INVISIBLE);
                 buttonSelect.setVisibility(View.INVISIBLE);
                 seekBar.setVisibility(View.INVISIBLE);
                 btnPlay.setVisibility(View.INVISIBLE);
                 cancelList.setVisibility(View.INVISIBLE);
-                //btnRatio.setVisibility(View.INVISIBLE);
-
             }
         });
 
@@ -356,14 +316,11 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 addMusic.setVisibility(View.VISIBLE);
                 btnSwitchCamera.setVisibility(View.VISIBLE);
                 filter.setVisibility(View.VISIBLE);
-                settingMoviePreview.setVisibility(View.VISIBLE);
-                composeVideo.setVisibility(View.VISIBLE);
                 btnSwitchCamera.setVisibility(View.VISIBLE);
                 lv.setVisibility(View.INVISIBLE);
                 buttonSelect.setVisibility(View.VISIBLE);
                 seekBar.setVisibility(View.INVISIBLE);
                 btnPlay.setVisibility(View.INVISIBLE);
-                //btnRatio.setVisibility(View.VISIBLE);
 
                 startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class)
                         .putExtra("videoPath",videoPath).putExtra("uri_mp3",uri_mp3));
@@ -409,44 +366,6 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
 
     }
 
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        Toast.makeText(this, "Selected Item: " +item.getTitle(), Toast.LENGTH_SHORT).show();
-        switch (item.getItemId()) {
-            case R.id.full:
-                Intent intent = new Intent(BaseCameraActivity.this,PortraitCameraActivity.class);
-                startActivity(intent);
-                // do your code
-                return true;
-            case R.id.one_ratio_one:
-                Intent oneRationOneIntent = new Intent(BaseCameraActivity.this,OneRatioOne.class);
-                startActivity(oneRationOneIntent);
-                // do your code
-                return true;
-            case R.id.four_ratio_three:
-                Intent fourRatioThreeIntent = new Intent(BaseCameraActivity.this,ThreeRatioFour.class);
-                startActivity(fourRatioThreeIntent);
-                // do your code
-                return true;
-            case R.id.sixteen_ratio_nine:
-                // do your code
-                Intent nineRatioSixteenIntent = new Intent(BaseCameraActivity.this,NineRatioSixteen.class);
-                startActivity(nineRatioSixteenIntent);
-                return true;
-            case R.id.landscape:
-                Intent landscapeIntent = new Intent(BaseCameraActivity.this,LandscapeCameraActivity.class);
-                startActivity(landscapeIntent);
-                // do your code
-                return true;
-            case R.id.square:
-                // do your code
-                Intent squreIntent = new Intent(BaseCameraActivity.this,SquareCameraActivity.class);
-                startActivity(squreIntent);
-                return true;
-            default:
-                return false;
-        }
-    }
 
     @Override
     protected void onPause() {

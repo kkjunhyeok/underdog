@@ -25,6 +25,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
 import com.arthenica.mobileffmpeg.Config;
 import com.arthenica.mobileffmpeg.ExecuteCallback;
@@ -133,7 +134,7 @@ public class mixing extends AppCompatActivity {
         execffmpegBinary_merge(command_extract);
         execffmpegBinary_merge(command_mute);
 
-        btn1.setBackgroundColor(Color.parseColor("#EC005F"));
+        btn1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         btn1.setTextColor(Color.parseColor("#FFFFFF"));
 
         //볼륨조절쪽
@@ -243,54 +244,54 @@ public class mixing extends AppCompatActivity {
                     case 1:
                     //command_mix = new String[]{"-y","-i",videoPath,"-filter:a","volume="+mixvalue/50,changedmp4};
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                                "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+num_eq/100+", "+  //이퀄라이저
-                                "volume="+num_vol/100+", "+ //볼륨
-                                "highpass="+num_low*6+", " + //하이패스(로우컷)
-                                "acompressor=threshold=-14dB:ratio=8:attack=23:release=100:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "volume="+(num_vol+1)/100+", "+ //볼륨
+                                "highpass="+(num_low+1)*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=8:attack=23:release=100:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+(num_echo+1)/500+", " + //에코
                                 "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
                         break;
 
                     case 2:
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                                "-af","equalizer=f=100:t=q:w=0.6:g=5:m="+num_eq/100+", "+  //이퀄라이저
-                                "volume="+num_vol/100+", "+ //볼륨
-                                "highpass="+num_low*6+", " + //하이패스(로우컷)
-                                "acompressor=threshold=-14dB:ratio=4:attack=35:release=260:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=61:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "-af","equalizer=f=100:t=q:w=0.6:g=5:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "volume="+(num_vol+1)/100+", "+ //볼륨
+                                "highpass="+(num_low+1)*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=4:attack=35:release=260:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=61:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+(num_echo+1)/500+", " + //에코
                                 "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
                         break;
 
                     case 3:
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                                "-af","equalizer=f=250:t=q:w=0.6:g=4:m="+num_eq/100+", "+  //이퀄라이저
-                                "equalizer=f=520:t=q:w=0.3:g=-2.5:m="+num_eq/100+", "+  //이퀄라이저
-                                "volume="+num_vol/100+", "+ //볼륨
-                                "highpass="+num_low*6+", " + //하이패스(로우컷)
-                                "acompressor=threshold=-14dB:ratio=6:attack=10:release=48:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "-af","equalizer=f=250:t=q:w=0.6:g=4:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "equalizer=f=520:t=q:w=0.3:g=-2.5:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "volume="+(num_vol+1)/100+", "+ //볼륨
+                                "highpass="+(num_low+1)*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=6:attack=10:release=48:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+(num_echo+1)/500+", " + //에코
                                 "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
                         break;
 
                     case 4:
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                                "-af","equalizer=f=810:t=q:w=0.43:g=3:m="+num_eq/100+", "+  //이퀄라이저
-                                "volume="+num_vol/100+", "+ //볼륨
-                                "highpass="+num_low*6+", " + //하이패스(로우컷)
-                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "-af","equalizer=f=810:t=q:w=0.43:g=3:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "volume="+(num_vol+1)/100+", "+ //볼륨
+                                "highpass="+(num_low+1)*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+(num_echo+1)/500+", " + //에코
                                 "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
                         break;
 
                     case 5:
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                                "-af","equalizer=f=1000:t=q:w=0.4:g=3:m="+num_eq/100+", "+  //이퀄라이저
-                                "volume="+num_vol/100+", "+ //볼륨
-                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "-af","equalizer=f=1000:t=q:w=0.4:g=3:m="+(num_eq+1)/100+", "+  //이퀄라이저
+                                "volume="+(num_vol+1)/100+", "+ //볼륨
+                                "highpass="+(num_low+1)*6+", " + //하이패스(로우컷)
                                 "lowpass=16800, "+ //로우패스 (하이컷)
-                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+num_comp/100+", " + //컴프
-                                "aecho=0.5:0.5:50:"+num_echo/500+", " + //에코
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+(num_comp+1)/100+", " + //컴프
+                                "aecho=0.5:0.5:50:"+(num_echo+1)/500+", " + //에코
                                 "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
                         break;
 
@@ -423,7 +424,7 @@ public class mixing extends AppCompatActivity {
         btn1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn1.setBackgroundColor(Color.parseColor("#EC005F"));
+                btn1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 btn1.setTextColor(Color.parseColor("#FFFFFF"));
                 btn2.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn2.setTextColor(Color.parseColor("#000000"));
@@ -445,7 +446,7 @@ public class mixing extends AppCompatActivity {
         btn2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn2.setBackgroundColor(Color.parseColor("#EC005F"));
+                btn2.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 btn2.setTextColor(Color.parseColor("#FFFFFF"));
 
                 btn1.setBackgroundColor(Color.parseColor("#D6D7D7"));
@@ -468,7 +469,7 @@ public class mixing extends AppCompatActivity {
         btn3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn3.setBackgroundColor(Color.parseColor("#EC005F"));
+                btn3.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 btn3.setTextColor(Color.parseColor("#FFFFFF"));
 
                 btn1.setBackgroundColor(Color.parseColor("#D6D7D7"));
@@ -490,7 +491,7 @@ public class mixing extends AppCompatActivity {
         btn4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn4.setBackgroundColor(Color.parseColor("#EC005F"));
+                btn4.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 btn4.setTextColor(Color.parseColor("#FFFFFF"));
 
                 btn1.setBackgroundColor(Color.parseColor("#D6D7D7"));
@@ -512,7 +513,7 @@ public class mixing extends AppCompatActivity {
         btn5.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                btn5.setBackgroundColor(Color.parseColor("#EC005F"));
+                btn5.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
                 btn5.setTextColor(Color.parseColor("#FFFFFF"));
 
                 btn1.setBackgroundColor(Color.parseColor("#D6D7D7"));

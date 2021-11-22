@@ -43,5 +43,7 @@ dependencies {
     implementation 'com.arthenica:mobile-ffmpeg-full:4.4'
     implementation 'org.florescu.android.rangeseekbar:rangeseekbar-library:0.3.0'
     implementation 'me.relex:circleindicator:1.2.2'
+    implementation 'androidx.viewpager2:viewpager2:1.0.0'
+    implementation 'me.relex:circleindicator:2.1.4'
     implementation project(':gpuv')
 }

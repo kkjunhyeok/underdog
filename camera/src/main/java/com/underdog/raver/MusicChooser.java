@@ -45,7 +45,7 @@ public class MusicChooser extends AppCompatActivity {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setMessage("음악 선택 후 동영상 촬영이 가능합니다.")
-                .setTitle("녹화시 사용할 BGM 선택")
+                .setTitle("녹화시 사용할 음악 선택")
                 .setCancelable(true)
                 .setPositiveButton("확인", (dialog, id) -> {
                 });
@@ -57,7 +57,7 @@ public class MusicChooser extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.song_layout);
-        getSupportActionBar().setTitle("BGM 선택");
+        getSupportActionBar().setTitle("음악 선택");
 
         context = this.getBaseContext();
 

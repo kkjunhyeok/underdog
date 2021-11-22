@@ -23,7 +23,7 @@ public class Tiny_DB extends AppCompatActivity {
     private ArrayList<String> namelist;
     private File file;
     private String ExternalPath = Environment.getExternalStorageDirectory().getAbsolutePath();
-
+    private String fileName;
     Context context;
 
 
@@ -47,7 +47,9 @@ public class Tiny_DB extends AppCompatActivity {
                 if(files[i].getName().endsWith(".txt"))
                 {
                     documentFiles.add(files[i]);
-                    namelist.add(files[i].getName());
+                    fileName = files[i].getName();
+                    int Idx = fileName.lastIndexOf("_");
+                    namelist.add(fileName.substring(0, Idx));
                 }
             }
         }

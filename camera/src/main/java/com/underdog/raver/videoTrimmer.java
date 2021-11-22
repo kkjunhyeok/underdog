@@ -92,6 +92,7 @@ public class videoTrimmer extends AppCompatActivity {
         getSupportActionBar().setTitle("영상 자르기");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().hide();
 
         imageView = findViewById(R.id.pause);
         videoView = findViewById(R.id.videoView);
