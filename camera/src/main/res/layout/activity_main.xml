@@ -23,6 +23,11 @@
       app:ci_margin="4dp"
       app:ci_width="7dp" />
 
+  <Button
+      android:id="@+id/tiny_db"
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:text="데이터 불러오기" />
 
   <Button
       android:id="@+id/camera_record"

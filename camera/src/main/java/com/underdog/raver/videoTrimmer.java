@@ -37,7 +37,11 @@ import com.arthenica.mobileffmpeg.StatisticsCallback;
 
 import org.florescu.android.rangeseekbar.RangeSeekBar;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Arrays;
 
 import static android.content.ContentValues.TAG;
@@ -60,7 +64,7 @@ public class videoTrimmer extends AppCompatActivity {
     private String filePath_mp4_change;
     private String filePath_mp3_change;
 
-    String ori_Path;
+    String ori_Path, ori_mp3;
 
     private static final String FILEPATH = "filepath";
 
@@ -246,7 +250,7 @@ public class videoTrimmer extends AppCompatActivity {
         filePath_mp4_change = dest_change_mp4.getAbsolutePath();
         //Toast.makeText(this, filePath, Toast.LENGTH_SHORT).show();
 
-        command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs-startMs) / 1000,"-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath};
+        command = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs-startMs) / 1000, filePath};
 
         //믹싱에서 바뀌는 파일 미리 생성
         //command_mp4_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", ori_Path, "-t", "" + (endMs - startMs) / 1000, "-vcodec", "mpeg4", "-b:v", "2097152", "-b:a", "48000", "-ac", "2", "-ar", "22050", filePath_mp4_change};
@@ -262,7 +266,6 @@ public class videoTrimmer extends AppCompatActivity {
 
         execffmpegBinary_mp3(command_mp3);
         execffmpegBinary_mp3(command_mp3_change);
-
 
     }
 
@@ -354,8 +357,35 @@ public class videoTrimmer extends AppCompatActivity {
                     //  progressDialog.dismiss();
                     loadingDialog.dismissDialog();
                     Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command));
+
+                    File fold = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/RAVER");
+
+                    Uri mp3_i = uri_mp3;
+                    String mp3 = mp3_i.toString();
+                    String mp4 = ori_Path;
+                    String mp3_trim = filePath_mp3;
+                    String mp4_trim = filePath;
+
+                    try {
+                        BufferedWriter buf = new BufferedWriter(new FileWriter(fold + "/" + filePrefix + ".txt"));
+                        buf.append(mp3);    // mp3 저장 문제 null로 저장됨
+                        buf.newLine();
+                        buf.append(mp4);
+                        buf.newLine();
+                        buf.append(mp3_trim);
+                        buf.newLine();
+                        buf.append(mp4_trim);
+                        buf.newLine();
+                        buf.close();
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                     Intent intent = new Intent(videoTrimmer.this, mixing.class);
-                    intent.putExtra("videoPath",filePath).putExtra("mp3Path",filePath_mp3);
+                    intent.putExtra("videoPath",filePath).putExtra("mp3Path", filePath_mp3);
                     startActivity(intent);
 
 //                        intent.putExtra(FILEPATH, filePath_merge);

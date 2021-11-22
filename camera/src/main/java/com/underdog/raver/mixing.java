@@ -52,6 +52,7 @@ public class mixing extends AppCompatActivity {
     private Runnable runnable_vol, runnable_mix ;
     String videoPath, mp3Path, mutemp4, extract,changedmp3,changedmp4, merge,save;
     String cmd_type = "none";
+    int mixpreset=1;
 
 
     @Override
@@ -159,7 +160,7 @@ public class mixing extends AppCompatActivity {
                 float volvalue = Float.parseFloat(num_vol.getText().toString());
 
                 mediaPlayer_mp3.stop();
-                command_vol = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/50,changedmp3};
+                command_vol = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/100,changedmp3};
                 cmd_type= "vol";
                 execffmpegBinary_merge(command_vol);
 
@@ -237,11 +238,63 @@ public class mixing extends AppCompatActivity {
                 float num_low = Float.parseFloat(num4.getText().toString());
                 float num_echo = Float.parseFloat(num5.getText().toString());
 
-                //command_mix = new String[]{"-y","-i",videoPath,"-filter:a","volume="+mixvalue/50,changedmp4};
-                command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
-                        "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+num_eq/100+", "+
-                        "volume="+num_vol/50+", "+
-                        "aecho=0.8:0.9:1000:"+num_echo/100,changedmp4 };
+                switch (mixpreset) {
+
+                    case 1:
+                    //command_mix = new String[]{"-y","-i",videoPath,"-filter:a","volume="+mixvalue/50,changedmp4};
+                        command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                                "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+num_eq/100+", "+  //이퀄라이저
+                                "volume="+num_vol/100+", "+ //볼륨
+                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=8:attack=23:release=100:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
+                        break;
+
+                    case 2:
+                        command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                                "-af","equalizer=f=100:t=q:w=0.6:g=5:m="+num_eq/100+", "+  //이퀄라이저
+                                "volume="+num_vol/100+", "+ //볼륨
+                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=4:attack=35:release=260:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=61:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
+                        break;
+
+                    case 3:
+                        command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                                "-af","equalizer=f=250:t=q:w=0.6:g=4:m="+num_eq/100+", "+  //이퀄라이저
+                                "equalizer=f=520:t=q:w=0.3:g=-2.5:m="+num_eq/100+", "+  //이퀄라이저
+                                "volume="+num_vol/100+", "+ //볼륨
+                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=6:attack=10:release=48:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
+                        break;
+
+                    case 4:
+                        command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                                "-af","equalizer=f=810:t=q:w=0.43:g=3:m="+num_eq/100+", "+  //이퀄라이저
+                                "volume="+num_vol/100+", "+ //볼륨
+                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "aecho=0.5:0.5:200:"+num_echo/500+", " + //에코
+                                "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
+                        break;
+
+                    case 5:
+                        command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
+                                "-af","equalizer=f=1000:t=q:w=0.4:g=3:m="+num_eq/100+", "+  //이퀄라이저
+                                "volume="+num_vol/100+", "+ //볼륨
+                                "highpass="+num_low*6+", " + //하이패스(로우컷)
+                                "lowpass=16800, "+ //로우패스 (하이컷)
+                                "acompressor=threshold=-14dB:ratio=4:attack=10:release=51:makeup=1:mix="+num_comp/100+", " + //컴프
+                                "aecho=0.5:0.5:50:"+num_echo/500+", " + //에코
+                                "loudnorm=I=-16:LRA=11:TP=-1.5",changedmp4 }; //피크제거
+                        break;
+
+                }
 
                 execffmpegBinary_merge(command_mix);
 
@@ -380,11 +433,13 @@ public class mixing extends AppCompatActivity {
                 btn4.setTextColor(Color.parseColor("#000000"));
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
+                mixpreset=1;
                 filter1.setProgress(50);
                 filter2.setProgress(50);
                 filter3.setProgress(50);
                 filter4.setProgress(50);
                 filter5.setProgress(50);
+
             }
         });
         btn2.setOnClickListener(new View.OnClickListener() {
@@ -401,11 +456,13 @@ public class mixing extends AppCompatActivity {
                 btn4.setTextColor(Color.parseColor("#000000"));
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
+                mixpreset=2;
                 filter1.setProgress(50);
                 filter2.setProgress(50);
                 filter3.setProgress(50);
                 filter4.setProgress(50);
                 filter5.setProgress(50);
+
             }
         });
         btn3.setOnClickListener(new View.OnClickListener() {
@@ -422,6 +479,7 @@ public class mixing extends AppCompatActivity {
                 btn4.setTextColor(Color.parseColor("#000000"));
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
+                mixpreset=3;
                 filter1.setProgress(50);
                 filter2.setProgress(50);
                 filter3.setProgress(50);
@@ -443,6 +501,7 @@ public class mixing extends AppCompatActivity {
                 btn3.setTextColor(Color.parseColor("#000000"));
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
+                mixpreset=4;
                 filter1.setProgress(50);
                 filter2.setProgress(50);
                 filter3.setProgress(50);
@@ -464,6 +523,7 @@ public class mixing extends AppCompatActivity {
                 btn3.setTextColor(Color.parseColor("#000000"));
                 btn4.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn4.setTextColor(Color.parseColor("#000000"));
+                mixpreset=5;
                 filter1.setProgress(50);
                 filter2.setProgress(50);
                 filter3.setProgress(50);

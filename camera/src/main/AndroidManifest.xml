@@ -60,6 +60,8 @@
         <activity android:name="com.underdog.raver.videoTrimmer"/>
         <activity android:name="com.underdog.raver.PreviewActivity"/>
         <activity android:name="com.underdog.raver.mixing"/>
+        <activity android:name="com.underdog.raver.Tiny_DB"/>
+        <activity android:name="com.underdog.raver.Tiny_DB_Mixing"/>
 
     </application>
 

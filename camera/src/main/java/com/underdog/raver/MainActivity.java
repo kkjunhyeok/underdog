@@ -25,7 +25,7 @@ import me.relex.circleindicator.CircleIndicator;
 public class MainActivity extends AppCompatActivity {
 
     private static final int CAMERA_PERMISSION_REQUEST_CODE = 88888;
-    private Button startCamera;
+    private Button startCamera, tiny_db;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -34,6 +34,15 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         startCamera = findViewById(R.id.camera_record);
+        tiny_db = findViewById(R.id.tiny_db);
+
+        tiny_db.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, Tiny_DB.class);
+                startActivity(intent);
+            }
+        });
 
         startCamera.setOnClickListener(new View.OnClickListener() {
             @Override

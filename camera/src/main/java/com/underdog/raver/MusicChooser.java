@@ -157,10 +157,10 @@ public class MusicChooser extends AppCompatActivity {
             final Song_Item songItem = songsList.get(position);
 
             // 아이템 내 각 위젯에 데이터 반영
-            Bitmap albumArt = MusicChooser.getArtworkQuick(context, (int)songItem.getAlbumId(), 100, 100);
+            /*Bitmap albumArt = MusicChooser.getArtworkQuick(context, (int)songItem.getAlbumId(), 100, 100);
             if(albumArt != null){
                 viewHolder.mImgAlbumArt.setImageBitmap(albumArt);
-            }
+            }*/
 
             viewHolder.mTitle.setText(songItem.getTitle());
             viewHolder.mSubTitle.setText(songItem.getArtist());
@@ -182,7 +182,7 @@ public class MusicChooser extends AppCompatActivity {
 
 
     // Album ID로 부터 Bitmap 이미지를 생성해 리턴해 주는 메소드
-    private static final BitmapFactory.Options sBitmapOptionsCache = new BitmapFactory.Options();
+    /*private static final BitmapFactory.Options sBitmapOptionsCache = new BitmapFactory.Options();
     private static final Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
 
     // Get album art for specified album. This method will not try to
@@ -234,7 +234,7 @@ public class MusicChooser extends AppCompatActivity {
             }
         }
         return null;
-    }
+    }*/
 
     public class Song_Item {
         private long mId; // 오디오 고유 ID
