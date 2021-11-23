@@ -7,6 +7,7 @@ import static java.lang.String.format;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.ColorStateList;
@@ -17,6 +18,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
@@ -29,6 +31,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.content.ContextCompat;
 
 import com.arthenica.mobileffmpeg.Config;
@@ -62,6 +65,7 @@ public class mixing extends AppCompatActivity {
     String mf;
 
     File f_extract,f_mute,f_vol,f_mix,f_merge;
+    final LoadingDialog loadingDialog = new LoadingDialog(mixing.this);
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -130,6 +134,7 @@ public class mixing extends AppCompatActivity {
         time_vol = (TextView)findViewById(R.id.time_vol);
         time_mix = (TextView)findViewById(R.id.time_mix);
 
+
         //음소거 영상 만들기
         command_mute =new String[]{"-y","-i",videoPath,"-c:v","copy","-an",mutemp4};
 
@@ -183,6 +188,7 @@ public class mixing extends AppCompatActivity {
                 btn_play_vol.setText(">");
                 time_vol.setText("00:00");
                 bv= (int) volvalue;
+                loadingDialog.startLoadingDialog();
 
             }
 
@@ -320,6 +326,7 @@ public class mixing extends AppCompatActivity {
                 btn_set_mix.setTextColor(Color.parseColor("#FFFFFF"));
                 btn_play_mix.setText(">");
                 time_mix.setText("00:00");
+                loadingDialog.startLoadingDialog();
                 mv= (int) num_vol;
                 meq=(int)num_eq;
                 mc=(int)num_comp;
@@ -570,9 +577,10 @@ public class mixing extends AppCompatActivity {
                     execffmpegBinary_merge(command_merge);
                     btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                     btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
+                    loadingDialog.startLoadingDialog();
                 }
                 else{
-                    Toast.makeText(mixing.this, "믹싱설정을 먼저 진행해주세요!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(mixing.this, "볼륨/믹싱 설정을 먼저 진행해주세요!", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -599,6 +607,7 @@ public class mixing extends AppCompatActivity {
                                     execffmpegBinary_merge(command_save);
                                     btn_save.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                                     btn_save.setTextColor(Color.parseColor("#FFFFFF"));
+                                    loadingDialog.startLoadingDialog();
                                     finish();
                                 }
                             })
@@ -739,6 +748,7 @@ public class mixing extends AppCompatActivity {
                             break;
 
                         case "vol":
+                            loadingDialog.dismissDialog();
                             Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command_vol));
                             mediaPlayer_mp3 = MediaPlayer.create(getApplicationContext(),uri_mp3);
                             mediaPlayer_mp3.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -771,6 +781,7 @@ public class mixing extends AppCompatActivity {
                             break;
 
                         case "mix":
+                            loadingDialog.dismissDialog();
                             Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command_mix));
                             mediaPlayer_mp4 = MediaPlayer.create(getApplicationContext(),uri_mp4);
                             mediaPlayer_mp4.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
@@ -803,6 +814,7 @@ public class mixing extends AppCompatActivity {
                             break;
 
                         case "merge":
+                            loadingDialog.dismissDialog();
                             Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command_merge));
                             mediaPlayer_mp3.seekTo(0);
                             mediaPlayer_mp4.seekTo(0);
@@ -818,6 +830,7 @@ public class mixing extends AppCompatActivity {
                             btn_play_vol.callOnClick();
                             break;
                         case "save":
+                            loadingDialog.dismissDialog();
                             mediaPlayer_mp4.stop();
                             mediaPlayer_mp3.stop();
                             f_mix= new File (changedmp4);

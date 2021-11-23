@@ -5,10 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.viewpager2.adapter.FragmentStateAdapter;
 
+import com.underdog.raver.fragment.FragmentEighth;
 import com.underdog.raver.fragment.FragmentFifth;
 import com.underdog.raver.fragment.FragmentFirst;
 import com.underdog.raver.fragment.FragmentFourth;
 import com.underdog.raver.fragment.FragmentSecond;
+import com.underdog.raver.fragment.FragmentSeventh;
+import com.underdog.raver.fragment.FragmentSixth;
 import com.underdog.raver.fragment.FragmentThird;
 
 public class MyAdapter extends FragmentStateAdapter {
@@ -29,7 +32,10 @@ public class MyAdapter extends FragmentStateAdapter {
         else if(index==1) return new FragmentSecond();
         else if(index==2) return new FragmentThird();
         else if(index==3) return new FragmentFourth();
-        else return new FragmentFifth();
+        else if(index==4) return new FragmentFifth();
+        else if(index==5) return new FragmentSixth();
+        else if(index==6) return new FragmentSeventh();
+        else return new FragmentEighth();
 
     }
 

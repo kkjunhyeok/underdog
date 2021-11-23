@@ -3,6 +3,9 @@ package com.underdog.raver;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.view.LayoutInflater;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 public class LoadingDialog {
     private Activity activity;
@@ -17,11 +20,10 @@ public class LoadingDialog {
         LayoutInflater inflater =  activity.getLayoutInflater();
         builder.setView(inflater.inflate(R.layout.loading,null));
         builder.setCancelable(true);
-
+        
         dialog = builder.create();
         dialog.show();
     }
-
     void dismissDialog(){
         dialog.dismiss();
     }

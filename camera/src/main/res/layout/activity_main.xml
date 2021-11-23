@@ -27,7 +27,7 @@
         android:fontFamily="@font/nanumsquare_ac_b"
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
-        android:text="카메라 실행"
+        android:text="새 프로젝트 생성"
         android:textColor="#FFFFFF"
         android:textSize="17sp"
         android:textStyle="bold" />
@@ -42,7 +42,7 @@
         android:fontFamily="@font/nanumsquare_ac_r"
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
-        android:text="데이터 불러오기"
+        android:text="프로젝트 불러오기"
         android:textSize="16dp" />
 
     <Button
@@ -55,7 +55,7 @@
         android:fontFamily="@font/nanumsquare_ac_r"
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
-        android:text="About"
+        android:text="Guide"
         android:textSize="16dp" />
 
 
