@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">#4192D9</color>
     <color name="colorPrimaryDark">#142E45</color>
-   <!-- <color name="colorAccent">#D81B60</color>-->
-    <color name="colorAccent">#F28F60</color>
+   <!-- <color name="colorAccent">##F28F60</color>-->
+    <color name="colorAccent">#4192D9</color>
     <color name="DarkGrey">#fff</color>
     <color name="colorTransparent">#00000000</color>
     <color name="colorOverlay">#fff</color>

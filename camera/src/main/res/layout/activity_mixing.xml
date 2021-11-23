@@ -20,18 +20,20 @@
             android:layout_height="wrap_content"
             android:text="배경 볼륨"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clipToPadding="true">
 
             <TextView
                 android:id="@+id/num_vol"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:layout_weight="3.5"
+                android:fontFamily="@font/nanumsquare_ac_r"
                 android:gravity="right"
                 android:text="50" />
 
@@ -47,12 +49,16 @@
             <Button
                 android:id="@+id/set_bgm"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
                 android:layout_weight="3"
-                android:background="@drawable/btn_background"
+                android:background="@drawable/btn_background_shadow"
+                android:fontFamily="@font/nanumsquare_ac_r"
                 android:gravity="center_vertical"
                 android:text="설정"
-                android:textAlignment="center" />
+                android:textAlignment="center"
+                android:textColor="#000" />
 
         </LinearLayout>
 
@@ -66,8 +72,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
+                android:background="@drawable/btn_background_shadow"
+                android:fontFamily="@font/nanumsquare_ac_b"
                 android:gravity="center_horizontal|center_vertical"
                 android:text=">"
+                android:textColor="@color/colorPrimary"
                 tools:ignore="TouchTargetSizeCheck,TouchTargetSizeCheck,TouchTargetSizeCheck" />
 
             <SeekBar
@@ -83,6 +92,7 @@
             android:id="@+id/time_vol"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquare_ac_r"
             android:gravity="right"
             android:text="00:00"
             android:textAlignment="center" />
@@ -91,10 +101,10 @@
             android:id="@+id/textView4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
             android:text="녹음 믹싱"
             android:textColor="#000000"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:textSize="20sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -105,6 +115,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginTop="5dp"
             android:background="@drawable/border"
             android:orientation="vertical">
 
@@ -120,6 +131,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#d6d7d7"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="Bright"
                     android:textSize="10sp" />
 
@@ -129,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#d6d7d7"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="Compressed"
                     android:textSize="10sp" />
 
@@ -138,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#d6d7d7"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="Warm"
                     android:textSize="10sp" />
 
@@ -147,6 +161,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#d6d7d7"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="Classic"
                     android:textSize="10sp" />
 
@@ -156,6 +171,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#d6d7d7"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="Vintage"
                     android:textSize="10sp" />
             </LinearLayout>
@@ -171,6 +187,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="2.8"
+                    android:fontFamily="@font/nanumsquare_ac_b"
                     android:text="볼륨"
                     android:textAlignment="center"
                     android:textColor="#000000"
@@ -182,6 +199,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:gravity="right"
                     android:text="50" />
 
@@ -207,17 +225,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.8"
+                    android:fontFamily="@font/nanumsquare_ac_b"
                     android:text="EQ"
                     android:textAlignment="center"
                     android:textColor="#000000"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
+                    android:textSize="16sp" />
 
                 <TextView
                     android:id="@+id/num2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="50"
                     android:textAlignment="viewEnd" />
 
@@ -241,6 +260,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.8"
+                    android:fontFamily="@font/nanumsquare_ac_b"
                     android:text="Comp"
                     android:textAlignment="center"
                     android:textColor="#000000"
@@ -252,6 +272,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="50"
                     android:textAlignment="viewEnd" />
 
@@ -275,6 +296,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.8"
+                    android:fontFamily="@font/nanumsquare_ac_b"
                     android:text="Highpass"
                     android:textAlignment="center"
                     android:textColor="#000000"
@@ -286,6 +308,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="50"
                     android:textAlignment="viewEnd" />
 
@@ -310,6 +333,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="2.8"
+                    android:fontFamily="@font/nanumsquare_ac_b"
                     android:text="에코"
                     android:textAlignment="center"
                     android:textColor="#000000"
@@ -321,6 +345,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
+                    android:fontFamily="@font/nanumsquare_ac_r"
                     android:text="50"
                     android:textAlignment="viewEnd" />
 
@@ -337,15 +362,20 @@
         <Button
             android:id="@+id/set_mix"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/btn_background"
+            android:layout_height="40dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:background="@drawable/btn_background_shadow"
+            android:fontFamily="@font/nanumsquare_ac_r"
             android:gravity="center_vertical"
             android:text="설정"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textColor="#000" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal">
 
             <Button
@@ -353,8 +383,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"
+                android:background="@drawable/btn_background_shadow"
+                android:fontFamily="@font/nanumsquare_ac_b"
                 android:gravity="center_horizontal|center_vertical"
-                android:text=">" />
+                android:text=">"
+                android:textColor="@color/colorPrimary" />
 
             <SeekBar
                 android:id="@+id/play_mix_seek"
@@ -369,6 +402,7 @@
             android:id="@+id/time_mix"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:fontFamily="@font/nanumsquare_ac_r"
             android:gravity="right"
             android:text="00:00"
             android:textAlignment="center" />
@@ -377,17 +411,23 @@
             android:id="@+id/btn_merge"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="같이 듣기" />
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_background_shadow"
+            android:fontFamily="@font/nanumsquare_ac_r"
+            android:text="같이 듣기"
+            android:textColor="#000" />
 
         <Button
             android:id="@+id/btn_save"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
-            android:text="저장" />
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/btn_background_shadow"
+            android:fontFamily="@font/nanumsquare_ac_r"
+            android:text="저장"
+            android:textColor="#000" />
 
     </LinearLayout>
 

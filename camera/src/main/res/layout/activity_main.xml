@@ -4,31 +4,59 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
+    android:background="#FFF"
     android:orientation="vertical"
     tools:context=".MainActivity">
 
-    <Button
-        android:id="@+id/tiny_db"
+    <ImageView
+        android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/btn_background_accent"
-        android:text="데이터 불러오기" />
+        android:layout_height="326dp"
+        android:layout_marginTop="50dp"
+        android:layout_marginBottom="-30dp"
+        app:srcCompat="@drawable/bluelogo" />
 
     <Button
         android:id="@+id/camera_record"
-        android:layout_width="match_parent"
-        android:layout_height="80dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/btn_background"
-        android:text="카메라 실행" />
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_background_shadow"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/nanumsquare_ac_b"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="카메라 실행"
+        android:textColor="#FFFFFF"
+        android:textSize="17sp"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/tiny_db"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_background_shadow"
+        android:fontFamily="@font/nanumsquare_ac_r"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="데이터 불러오기"
+        android:textSize="16dp" />
 
     <Button
         android:id="@+id/about"
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:text="About" />
+        android:layout_gravity="center|center_horizontal|center_vertical"
+        android:layout_marginBottom="30dp"
+        android:background="@drawable/btn_background_shadow"
+        android:fontFamily="@font/nanumsquare_ac_r"
+        android:foregroundGravity="center_vertical|center|center_horizontal"
+        android:gravity="center|center_horizontal|center_vertical"
+        android:text="About"
+        android:textSize="16dp" />
 
 
 </LinearLayout>

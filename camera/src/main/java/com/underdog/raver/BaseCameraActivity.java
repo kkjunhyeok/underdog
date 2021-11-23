@@ -188,12 +188,13 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                         btnPlay.setVisibility(View.INVISIBLE);
                         //recordBtn.performClick();
                         seekBar.setVisibility(View.INVISIBLE);
+                        addMusic.setVisibility(View.INVISIBLE);
+
                         countDownTimer.start();
-                        mediaPlayer.start();
-                        mediaPlayer.pause();
                         timer.schedule(new TimerTask() {
                             @Override
                             public void run() {
+                                mediaPlayer.pause();
 //                                mediaPlayer.start();
                             }
                         },6000);
@@ -294,6 +295,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
                 timeView.setVisibility(View.VISIBLE);
                 addMusic.setVisibility(View.INVISIBLE);
                 btnSwitchCamera.setVisibility(View.INVISIBLE);
+
                 filter.setVisibility(View.INVISIBLE);
                 buttonSelect.setVisibility(View.INVISIBLE);
                 seekBar.setVisibility(View.INVISIBLE);

@@ -22,9 +22,7 @@
         android:roundIcon="@mipmap/ic_logo_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.underdog.raver.NineRatioSixteen"></activity>
-        <activity android:name="com.underdog.raver.ThreeRatioFour" />
-        <activity android:name="com.underdog.raver.OneRatioOne" />
+
         <activity android:name="com.underdog.raver.AudioPlayer" />
         <activity android:name="com.underdog.raver.MusicChooser"/>
         <activity
@@ -52,10 +50,7 @@
             >
 
         </activity>
-        <activity
-            android:name="com.underdog.raver.LandscapeCameraActivity"
-            android:screenOrientation="landscape" />
-        <activity android:name="com.underdog.raver.SquareCameraActivity"/>
+
         <activity android:name="com.underdog.raver.Mp4ComposeActivity" />
         <activity android:name="com.underdog.raver.videoTrimmer"/>
         <activity android:name="com.underdog.raver.PreviewActivity"/>

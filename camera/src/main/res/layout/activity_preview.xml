@@ -20,7 +20,11 @@
         android:id="@+id/tohome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_margin="10dp"
         android:layout_weight="6"
+        android:background="@drawable/btn_background_shadow"
+        android:backgroundTint="@color/colorPrimary"
+        android:fontFamily="@font/nanumsquare_ac_r"
         android:text="홈으로" />
 
 

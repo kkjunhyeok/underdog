@@ -5,8 +5,11 @@ import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_CANCEL;
 import static com.arthenica.mobileffmpeg.Config.RETURN_CODE_SUCCESS;
 import static java.lang.String.format;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -15,6 +18,7 @@ import android.os.Handler;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.MediaController;
@@ -54,13 +58,15 @@ public class mixing extends AppCompatActivity {
     String videoPath, mp3Path, mutemp4, extract,changedmp3,changedmp4, merge,save;
     String cmd_type = "none";
     int mixpreset=1;
-
+    int bv,mv,meq,mc,mh,meh;
+    String mf;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mixing);
         getSupportActionBar().setTitle("믹싱");
+        getSupportActionBar().hide();
         handler_vol = new Handler();
         handler_mix = new Handler();
 
@@ -137,6 +143,8 @@ public class mixing extends AppCompatActivity {
         btn1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         btn1.setTextColor(Color.parseColor("#FFFFFF"));
 
+
+
         //볼륨조절쪽
         mediaPlayer_mp3 = MediaPlayer.create(this,uri_mp3);
         play_vol.setMax(mediaPlayer_mp3.getDuration());
@@ -164,11 +172,11 @@ public class mixing extends AppCompatActivity {
                 command_vol = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/100,changedmp3};
                 cmd_type= "vol";
                 execffmpegBinary_merge(command_vol);
-
+                btn_set_vol.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                btn_set_vol.setTextColor(Color.parseColor("#FFFFFF"));
                 btn_play_vol.setText(">");
                 time_vol.setText("00:00");
-
-//
+                bv= (int) volvalue;
 
             }
 
@@ -242,7 +250,7 @@ public class mixing extends AppCompatActivity {
                 switch (mixpreset) {
 
                     case 1:
-                    //command_mix = new String[]{"-y","-i",videoPath,"-filter:a","volume="+mixvalue/50,changedmp4};
+                        mf = "BRIGHT";
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
                                 "-af","equalizer=f=1240:t=q:w=0.3:g=-3:m="+(num_eq+1)/100+", "+  //이퀄라이저
                                 "volume="+(num_vol+1)/100+", "+ //볼륨
@@ -253,6 +261,7 @@ public class mixing extends AppCompatActivity {
                         break;
 
                     case 2:
+                        mf = "COMPRESSED";
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
                                 "-af","equalizer=f=100:t=q:w=0.6:g=5:m="+(num_eq+1)/100+", "+  //이퀄라이저
                                 "volume="+(num_vol+1)/100+", "+ //볼륨
@@ -264,6 +273,7 @@ public class mixing extends AppCompatActivity {
                         break;
 
                     case 3:
+                        mf = "WARM";
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
                                 "-af","equalizer=f=250:t=q:w=0.6:g=4:m="+(num_eq+1)/100+", "+  //이퀄라이저
                                 "equalizer=f=520:t=q:w=0.3:g=-2.5:m="+(num_eq+1)/100+", "+  //이퀄라이저
@@ -275,6 +285,7 @@ public class mixing extends AppCompatActivity {
                         break;
 
                     case 4:
+                        mf = "CLASSIC";
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
                                 "-af","equalizer=f=810:t=q:w=0.43:g=3:m="+(num_eq+1)/100+", "+  //이퀄라이저
                                 "volume="+(num_vol+1)/100+", "+ //볼륨
@@ -285,6 +296,7 @@ public class mixing extends AppCompatActivity {
                         break;
 
                     case 5:
+                        mf = "VINTAGE";
                         command_mix = new String[]{"-y","-i", extract, "-map","0","-c:v","copy",
                                 "-af","equalizer=f=1000:t=q:w=0.4:g=3:m="+(num_eq+1)/100+", "+  //이퀄라이저
                                 "volume="+(num_vol+1)/100+", "+ //볼륨
@@ -298,10 +310,15 @@ public class mixing extends AppCompatActivity {
                 }
 
                 execffmpegBinary_merge(command_mix);
-
+                btn_set_mix.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                btn_set_mix.setTextColor(Color.parseColor("#FFFFFF"));
                 btn_play_mix.setText(">");
                 time_mix.setText("00:00");
-
+                mv= (int) num_vol;
+                meq=(int)num_eq;
+                mc=(int)num_comp;
+                mh=(int)num_low;
+                meh=(int)num_echo;
             }
 
         });
@@ -540,8 +557,10 @@ public class mixing extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cmd_type = "merge";
-              command_merge = new String[]{"-y","-i", changedmp3,"-i",changedmp4,"-filter_complex","amerge=inputs=2","-ac", "2",merge};
+                command_merge = new String[]{"-y","-i", changedmp3,"-i",changedmp4,"-filter_complex","amerge=inputs=2","-ac", "2",merge};
                 execffmpegBinary_merge(command_merge);
+                btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
             }
         });
 
@@ -549,12 +568,46 @@ public class mixing extends AppCompatActivity {
         btn_save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cmd_type = "save";
-                command_save = new String[]{"-y","-i", mutemp4, "-i", merge, "-c", "copy", save};
-                execffmpegBinary_merge(command_save);
+
+                File files = new File(merge);
+
+                if(files.exists()==true) {
+                    AlertDialog.Builder builder1 = new AlertDialog.Builder(mixing.this);
+                    builder1.setMessage("선택하신 값 : \n배경 볼륨 : "+bv+"\n필터 : " + mf + "\n믹싱 볼륨 : " + mv +
+                            "\nEQ : " + meq +"\nComp : " + mc +"\nHighPass : " + mh +"\n에코: " + meh)
+                            .setTitle("저장하시겠습니까?")
+                            .setCancelable(false)
+                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    cmd_type = "save";
+                                    command_save = new String[]{"-y","-i", mutemp4, "-i", merge, "-c", "copy", save};
+                                    execffmpegBinary_merge(command_save);
+                                    btn_save.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                                    btn_save.setTextColor(Color.parseColor("#FFFFFF"));
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("취소", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alert1 = builder1.create();
+                    alert1.show();
+                } else {
+                    Toast.makeText(mixing.this, "같이듣기 버튼을 먼저 눌러주세요 !", Toast.LENGTH_SHORT).show();
+                }
+
+
+
 
             }
         });
+
+
+
+
+
     }
 
 
@@ -616,7 +669,7 @@ public class mixing extends AppCompatActivity {
                 builder.setMessage("정말 이전으로 가겠습니까?\n작업 내용이 사라질 수 있습니다.")
                         .setTitle("뒤로가기")
                         .setCancelable(false)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("저장", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
                                 finish();
                             }
