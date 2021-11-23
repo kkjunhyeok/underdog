@@ -50,7 +50,7 @@ public class mixing extends AppCompatActivity {
     Button btn_merge, btn_save;
     Button btn1, btn2,btn3,btn4,btn5;
     TextView num_vol, num1,num2,num3,num4,num5, time_vol,time_mix;
-    String[] command_mute, command_extract, command_vol, command_mix, command_merge, command_save;
+    String[] command_mute, command_extract, command_vol, command_mix, command_merge, command_save, command_mp3_change;
     private MediaPlayer mediaPlayer_mp3, mediaPlayer_mp4;
     Uri uri_mp3, uri_mp4, uri_merge, uri_video, uri_ori; //바꾸는거 mp3
     private Handler handler_vol, handler_mix;
@@ -60,6 +60,8 @@ public class mixing extends AppCompatActivity {
     int mixpreset=1;
     int bv,mv,meq,mc,mh,meh;
     String mf;
+
+    File f_extract,f_mute,f_vol,f_mix,f_merge;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -131,14 +133,18 @@ public class mixing extends AppCompatActivity {
         //음소거 영상 만들기
         command_mute =new String[]{"-y","-i",videoPath,"-c:v","copy","-an",mutemp4};
 
+        command_mp3_change = new String[]{ "-y", "-i", String.valueOf(uri_mp3),"-c:v","copy", changedmp3};
+
         //영상에서 mp3(목소리)추출
         command_extract = new String[]{"-y","-i",videoPath,"-vn","-acodec","libmp3lame","-ar","44.1k","-ac","2","-ab","128k",extract};
-        //command_extract = new String[] {"-y","-i",videoPath, "-vn", "-ar"," 44100", "-ac" ,"2", "-ab" ,"192" ,"-f",mp4tomp3};
+
 
 
         cmd_type="none";
+
         execffmpegBinary_merge(command_extract);
         execffmpegBinary_merge(command_mute);
+        execffmpegBinary_merge(command_mp3_change);
 
         btn1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         btn1.setTextColor(Color.parseColor("#FFFFFF"));
@@ -146,7 +152,7 @@ public class mixing extends AppCompatActivity {
 
 
         //볼륨조절쪽
-        mediaPlayer_mp3 = MediaPlayer.create(this,uri_mp3);
+        mediaPlayer_mp3 = MediaPlayer.create(this,uri_ori);
         play_vol.setMax(mediaPlayer_mp3.getDuration());
         //볼륨값
         change_vol.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -556,11 +562,20 @@ public class mixing extends AppCompatActivity {
         btn_merge.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cmd_type = "merge";
-                command_merge = new String[]{"-y","-i", changedmp3,"-i",changedmp4,"-filter_complex","amerge=inputs=2","-ac", "2",merge};
-                execffmpegBinary_merge(command_merge);
-                btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
-                btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
+                File files = new File(changedmp4);
+
+                if(files.exists()==true) {
+                    cmd_type = "merge";
+                    command_merge = new String[]{"-y","-i", changedmp3,"-i",changedmp4,"-filter_complex","amerge=inputs=2","-ac", "2",merge};
+                    execffmpegBinary_merge(command_merge);
+                    btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                    btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
+                }
+                else{
+                    Toast.makeText(mixing.this, "믹싱설정을 먼저 진행해주세요!", Toast.LENGTH_SHORT).show();
+                }
+
+
             }
         });
 
@@ -573,7 +588,7 @@ public class mixing extends AppCompatActivity {
 
                 if(files.exists()==true) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mixing.this);
-                    builder1.setMessage("선택하신 값 : \n배경 볼륨 : "+bv+"\n필터 : " + mf + "\n믹싱 볼륨 : " + mv +
+                    builder1.setMessage("선택하신 값 : \n\n배경 볼륨 : "+bv+"\n필터 : " + mf + "\n믹싱 볼륨 : " + mv +
                             "\nEQ : " + meq +"\nComp : " + mc +"\nHighPass : " + mh +"\n에코: " + meh)
                             .setTitle("저장하시겠습니까?")
                             .setCancelable(false)
@@ -803,6 +818,19 @@ public class mixing extends AppCompatActivity {
                             btn_play_vol.callOnClick();
                             break;
                         case "save":
+                            mediaPlayer_mp4.stop();
+                            mediaPlayer_mp3.stop();
+                            f_mix= new File (changedmp4);
+                            f_vol = new File (changedmp3);
+                            f_merge = new File (merge);
+                            f_extract = new File (extract);
+                            f_mute = new File (mutemp4);
+                            f_mix.delete();
+                            f_vol.delete();
+                            f_mute.delete();
+                            f_merge.delete();
+                            f_extract.delete();
+
                             Log.d(Config.TAG, "finished command: ffmpeg" + Arrays.toString(command_save));
                             Intent intent = new Intent(mixing.this, PreviewActivity.class);
                             intent.putExtra("final_path",save);
@@ -821,4 +849,6 @@ public class mixing extends AppCompatActivity {
     }
 
 
+
 }
+

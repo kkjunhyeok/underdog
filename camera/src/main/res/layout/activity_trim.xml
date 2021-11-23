@@ -99,7 +99,8 @@
             android:background="@drawable/btn_background_shadow"
             android:backgroundTint="@color/colorPrimary"
             android:fontFamily="@font/nanumsquare_ac_r"
-            android:text="저장" />
+            android:text="저장"
+            android:textColor="#FFF" />
     </LinearLayout>
 
 </LinearLayout>

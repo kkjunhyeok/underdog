@@ -261,12 +261,8 @@ public class videoTrimmer extends AppCompatActivity {
 
         command_mp3 = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs-startMs) / 1000,"-ac","1", filePath_mp3};
         //믹싱에서 바뀌는 목소리 파일 미리 생성
-        command_mp3_change = new String[]{"-ss", "" + startMs / 1000, "-y", "-i", String.valueOf(uri_mp3), "-t", "" + (endMs-startMs) / 1000,"-ac","1", filePath_mp3_change};
-
-        // command_mp3 = new String[]{"-i", String.valueOf(uri_mp3), "-map","0","-c:v","copy","-af","aecho=0.6:0.5:1000:0.5", filePath_mp3};
 
         execffmpegBinary_mp3(command_mp3);
-        execffmpegBinary_mp3(command_mp3_change);
 
     }
 

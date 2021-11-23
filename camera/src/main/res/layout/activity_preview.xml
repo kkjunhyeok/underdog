@@ -9,10 +9,18 @@
     android:orientation="vertical"
     tools:context=".PreviewActivity">
 
+    <ImageView
+        android:id="@+id/imageView5"
+        android:layout_width="match_parent"
+        android:layout_height="105dp"
+        android:background="@drawable/border"
+        app:srcCompat="@drawable/logo_simpleblue" />
+
     <VideoView
         android:id="@+id/videoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="15dp"
         android:layout_weight="1"
         android:foregroundGravity="center|center_horizontal" />
 
@@ -20,12 +28,16 @@
         android:id="@+id/tohome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="10dp"
-        android:layout_weight="6"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="20dp"
+        android:layout_weight="3"
         android:background="@drawable/btn_background_shadow"
         android:backgroundTint="@color/colorPrimary"
         android:fontFamily="@font/nanumsquare_ac_r"
-        android:text="홈으로" />
+        android:text="홈으로"
+        android:textColor="#FFFFFF" />
 
 
 </LinearLayout>

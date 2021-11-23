@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
     android:orientation="vertical">
 
     <ImageView
@@ -12,6 +13,6 @@
         android:layout_height="match_parent"
         android:scaleType="centerInside"
         android:visibility="visible"
-        app:srcCompat="@drawable/logo" />
+        app:srcCompat="@drawable/splash_blue" />
 
 </RelativeLayout>

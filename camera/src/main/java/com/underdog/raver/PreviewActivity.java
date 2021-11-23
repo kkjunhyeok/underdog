@@ -25,6 +25,7 @@ public class PreviewActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().setTitle("최종 영상");
+        getSupportActionBar().hide();
 
         Toast.makeText(this, "저장 완료", Toast.LENGTH_LONG).show();
 
@@ -46,8 +47,8 @@ public class PreviewActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(PreviewActivity.this);
-                builder.setMessage("홈동 화면으로 이동")
-                        .setTitle("홈 화면으로 이동")
+                builder.setMessage("홈 화면으로 이동")
+                        .setTitle("이동하시겠습니까?")
                         .setCancelable(false)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -68,51 +69,10 @@ public class PreviewActivity extends AppCompatActivity {
 
 
     }
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case android.R.id.home:{ //toolbar의 back키 눌렀을 때 동작
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-                builder.setMessage("정말 이전으로 가겠습니까?\n작업 내용이 사라질 수 있습니다.")
-                        .setTitle("뒤로가기")
-                        .setCancelable(false)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                androidx.appcompat.app.AlertDialog alert = builder.create();
-                alert.show();
-            }
+
+    @Override public void onBackPressed() {
+        //super.onBackPressed();
         }
-        return super.onOptionsItemSelected(item);
-    }
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_BACK:
-                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-                builder.setMessage("정말 이전으로 가겠습니까?\n작업 내용이 사라질 수 있습니다.")
-                        .setTitle("뒤로가기")
-                        .setCancelable(false)
-                        .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                finish();
-                            }
-                        })
-                        .setNegativeButton("취소", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-                androidx.appcompat.app.AlertDialog alert = builder.create();
-                alert.show();
-                break;
-        }
-        return false;
-    }
+
 }
+
