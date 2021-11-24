@@ -593,8 +593,6 @@ public class mixing extends AppCompatActivity {
                     execffmpegBinary_merge(command_merge);
                     btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                     btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
-                    btn_merge.setBackgroundTintList(null);
-                    btn_merge.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                     loadingDialog.startLoadingDialog();
                 }
                 else{
