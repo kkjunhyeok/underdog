@@ -21,17 +21,31 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="15dp"
+        android:layout_marginBottom="30dp"
         android:layout_weight="1"
         android:foregroundGravity="center|center_horizontal" />
+
+    <Button
+        android:id="@+id/btnshare"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="15dp"
+        android:layout_weight="3"
+        android:background="@drawable/btn_background_shadow"
+        android:fontFamily="@font/nanumsquare_ac_r"
+        android:text="공유하기"
+        android:textColor="@color/colorPrimary" />
+
 
     <Button
         android:id="@+id/tohome"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginLeft="20dp"
-        android:layout_marginTop="10dp"
         android:layout_marginRight="20dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="15dp"
         android:layout_weight="3"
         android:background="@drawable/btn_background_shadow"
         android:backgroundTint="@color/colorPrimary"

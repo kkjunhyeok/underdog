@@ -10,8 +10,9 @@
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="match_parent"
-        android:layout_height="326dp"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="50dp"
         android:layout_marginBottom="-30dp"
         app:srcCompat="@drawable/bluelogo" />
@@ -43,6 +44,7 @@
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="프로젝트 불러오기"
+        android:textColor="@color/colorPrimary"
         android:textSize="16dp" />
 
     <Button
@@ -56,6 +58,7 @@
         android:foregroundGravity="center_vertical|center|center_horizontal"
         android:gravity="center|center_horizontal|center_vertical"
         android:text="Guide"
+        android:textColor="@color/colorPrimary"
         android:textSize="16dp" />
 
 

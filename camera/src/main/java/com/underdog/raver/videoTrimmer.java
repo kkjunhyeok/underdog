@@ -384,6 +384,8 @@ public class videoTrimmer extends AppCompatActivity {
                     Intent intent = new Intent(videoTrimmer.this, mixing.class);
                     intent.putExtra("videoPath",filePath).putExtra("mp3Path", filePath_mp3);
                     startActivity(intent);
+                    overridePendingTransition(0, 0);
+
 
 //                        intent.putExtra(FILEPATH, filePath_merge);
 //                        startActivity(intent);
@@ -429,6 +431,7 @@ public class videoTrimmer extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                overridePendingTransition(0, 0);
                                 finish();
                             }
                         })
@@ -452,6 +455,7 @@ public class videoTrimmer extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                overridePendingTransition(0, 0);
                                 finish();
                             }
                         })

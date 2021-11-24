@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class PreviewActivity extends AppCompatActivity {
 
     private VideoView videoView;
-    Button btn2home;
+    Button btn2home, btnshare;
 
 
     @Override
@@ -34,6 +34,7 @@ public class PreviewActivity extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         videoView = (VideoView) findViewById(R.id.videoView);
         btn2home = (Button) findViewById(R.id.tohome);
+        btnshare = (Button) findViewById(R.id.btnshare);
 
         String filePath = getIntent().getStringExtra("final_path");
 
@@ -41,6 +42,19 @@ public class PreviewActivity extends AppCompatActivity {
         MediaController mediaController = new MediaController(this);
         mediaController.setAnchorView(videoView);
         videoView.setMediaController(mediaController);
+
+
+        btnshare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent sharingIntent = new Intent(Intent.ACTION_SEND);
+                Uri screenshotUri = Uri.parse(filePath);
+
+                sharingIntent.setType("video/mp4");
+                sharingIntent.putExtra(Intent.EXTRA_STREAM, screenshotUri);
+                startActivity(Intent.createChooser(sharingIntent, "영상을 공유해보세요.")); //
+            }
+        });
 
         //videoView.start();
         btn2home.setOnClickListener(new View.OnClickListener() {
@@ -54,6 +68,7 @@ public class PreviewActivity extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent intent = new Intent(PreviewActivity.this,MainActivity.class);
                                 startActivity(intent);
+                                overridePendingTransition(0, 0);
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {

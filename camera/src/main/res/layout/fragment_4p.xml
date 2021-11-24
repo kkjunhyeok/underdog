@@ -3,7 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
+    <TextView
+        android:id="@+id/tvName1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="false"
+        android:layout_gravity="top"
+        android:layout_marginTop="50dp"
+        android:fontFamily="@font/nanumsquare_ac_r"
+        android:gravity="center"
+        android:lineSpacingMultiplier="1.5"
+        android:text="버튼을 누르고 5초 후에 \n 음악과 촬영이 함께 시작돼요!"
+        android:textColor="@android:color/white"
+        android:textSize="20sp"
+        android:textStyle="bold" />
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -20,17 +33,7 @@
             android:scaleType="centerInside"
             android:visibility="visible" />
 
-        <TextView
-            android:id="@+id/tvName4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="Hello This is Page 4"
-            android:textColor="@android:color/white"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+
 
     </RelativeLayout>
 

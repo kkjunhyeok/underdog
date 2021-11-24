@@ -278,6 +278,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
 
             Intent intent = new Intent(BaseCameraActivity.this,MusicChooser.class);
             startActivity(intent);
+            overridePendingTransition(0, 0);
 
         });
 
@@ -326,6 +327,7 @@ public class BaseCameraActivity extends AppCompatActivity implements View.OnClic
 
                 startActivity(new Intent(BaseCameraActivity.this, videoTrimmer.class)
                         .putExtra("videoPath",videoPath).putExtra("uri_mp3",uri_mp3));
+                overridePendingTransition(0, 0);
             }
         });
         findViewById(R.id.btn_flash).setOnClickListener(v -> {

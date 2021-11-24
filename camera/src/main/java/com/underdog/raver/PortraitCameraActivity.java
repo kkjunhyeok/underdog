@@ -25,6 +25,7 @@ public class PortraitCameraActivity extends BaseCameraActivity {
     public void onBackPressed() {
         Intent intent = new Intent(PortraitCameraActivity.this,MainActivity.class);
         startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 
 

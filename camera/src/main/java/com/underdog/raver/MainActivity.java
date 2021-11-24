@@ -109,7 +109,7 @@ public class MainActivity extends AppCompatActivity {
         }*/
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("종료")
+        builder.setMessage("")
                 .setTitle("정말 종료하시겠습니까?")
                 .setCancelable(false)
                 .setPositiveButton("종료", new DialogInterface.OnClickListener() {
@@ -118,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                         homeIntent.addCategory( Intent.CATEGORY_HOME );
                         homeIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                         startActivity(homeIntent);
+                        overridePendingTransition(0, 0);
                     }
                 })
                 .setNegativeButton("취소", new DialogInterface.OnClickListener() {

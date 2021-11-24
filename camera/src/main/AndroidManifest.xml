@@ -23,12 +23,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name="com.underdog.raver.AudioPlayer" />
         <activity android:name="com.underdog.raver.MusicChooser"/>
         <activity
             android:name=".SplashActivity"
             android:exported="true"
             android:theme="@style/AppTheme"
+            android:hardwareAccelerated="false"
             tools:ignore="Instantiatable">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

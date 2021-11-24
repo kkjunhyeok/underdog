@@ -2,7 +2,7 @@
 <resources>
     <dimen name="pageMargin">20dp</dimen>
     <dimen name="offset">20dp</dimen>
-    <dimen name="pageMarginAndOffset">20dp</dimen>
+    <dimen name="pageMarginAndOffset">10dp</dimen>
     <dimen name="pageMargintop">110dp</dimen>
     <dimen name="frameSize">720dp</dimen>
 </resources>

@@ -32,7 +32,7 @@ public class Tiny_DB extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.tiny_db);
         getSupportActionBar().setTitle("미완성곡 MIXING");
-
+        getSupportActionBar().hide();
         context = this.getBaseContext();
 
         documentFiles = new ArrayList<>();
@@ -64,6 +64,7 @@ public class Tiny_DB extends AppCompatActivity {
                 Intent intent = new Intent(Tiny_DB.this, Tiny_DB_Mixing.class);
                 intent.putExtra("name",documentFiles.get(i).getAbsolutePath());
                 startActivity(intent);
+                overridePendingTransition(0, 0);
 
             }
         });
@@ -79,6 +80,7 @@ public class Tiny_DB extends AppCompatActivity {
                         .setCancelable(false)
                         .setPositiveButton("확인", new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
+                                overridePendingTransition(0, 0);
                                 finish();
                             }
                         })
@@ -104,6 +106,8 @@ public class Tiny_DB extends AppCompatActivity {
                             public void onClick(DialogInterface dialog, int id) {
                                 Intent intent = new Intent(Tiny_DB.this, MainActivity.class);
                                 startActivity(intent);
+                                overridePendingTransition(0, 0);
+
                             }
                         })
                         .setNegativeButton("취소", new DialogInterface.OnClickListener() {

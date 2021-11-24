@@ -138,7 +138,7 @@ public class mixing extends AppCompatActivity {
         //음소거 영상 만들기
         command_mute =new String[]{"-y","-i",videoPath,"-c:v","copy","-an",mutemp4};
 
-        command_mp3_change = new String[]{ "-y", "-i", String.valueOf(uri_mp3),"-c:v","copy", changedmp3};
+        command_mp3_change = new String[]{ "-y", "-i", String.valueOf(mp3Path),"-c:v","copy", changedmp3};
 
         //영상에서 mp3(목소리)추출
         command_extract = new String[]{"-y","-i",videoPath,"-vn","-acodec","libmp3lame","-ar","44.1k","-ac","2","-ab","128k",extract};
@@ -146,7 +146,6 @@ public class mixing extends AppCompatActivity {
 
 
         cmd_type="none";
-
         execffmpegBinary_merge(command_extract);
         execffmpegBinary_merge(command_mute);
         execffmpegBinary_merge(command_mp3_change);
@@ -177,18 +176,27 @@ public class mixing extends AppCompatActivity {
         btn_set_vol.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                float volvalue = Float.parseFloat(num_vol.getText().toString());
+                File files = new File(mp3Path);
 
-                mediaPlayer_mp3.stop();
-                command_vol = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/100,changedmp3};
-                cmd_type= "vol";
-                execffmpegBinary_merge(command_vol);
-                btn_set_vol.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
-                btn_set_vol.setTextColor(Color.parseColor("#FFFFFF"));
-                btn_play_vol.setText(">");
-                time_vol.setText("00:00");
-                bv= (int) volvalue;
-                loadingDialog.startLoadingDialog();
+                if(files.exists()==true) {
+                    float volvalue = Float.parseFloat(num_vol.getText().toString());
+                    mediaPlayer_mp3.stop();
+                    command_vol = new String[]{"-y","-i",mp3Path,"-filter:a","volume="+volvalue/100,changedmp3};
+                    cmd_type= "vol";
+                    execffmpegBinary_merge(command_vol);
+                    btn_set_vol.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                    btn_set_vol.setTextColor(Color.parseColor("#FFFFFF"));
+                    btn_merge.setBackgroundTintList(null);
+                    btn_merge.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                    btn_play_vol.setText(">");
+                    time_vol.setText("00:00");
+                    bv= (int) volvalue;
+                    loadingDialog.startLoadingDialog();
+                }
+                else{
+                    Toast.makeText(mixing.this, "잠시후 시도해주세요!", Toast.LENGTH_SHORT).show();
+                }
+
 
             }
 
@@ -321,17 +329,25 @@ public class mixing extends AppCompatActivity {
 
                 }
 
-                execffmpegBinary_merge(command_mix);
-                btn_set_mix.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
-                btn_set_mix.setTextColor(Color.parseColor("#FFFFFF"));
-                btn_play_mix.setText(">");
-                time_mix.setText("00:00");
-                loadingDialog.startLoadingDialog();
-                mv= (int) num_vol;
-                meq=(int)num_eq;
-                mc=(int)num_comp;
-                mh=(int)num_low;
-                meh=(int)num_echo;
+                File files = new File(extract);
+
+                if(files.exists()==true) {
+                    execffmpegBinary_merge(command_mix);
+                    btn_set_mix.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
+                    btn_set_mix.setTextColor(Color.parseColor("#FFFFFF"));
+                    btn_play_mix.setText(">");
+                    time_mix.setText("00:00");
+                    loadingDialog.startLoadingDialog();
+                    mv= (int) num_vol;
+                    meq=(int)num_eq;
+                    mc=(int)num_comp;
+                    mh=(int)num_low;
+                    meh=(int)num_echo;
+                }
+                else{
+                    Toast.makeText(mixing.this, "잠시후 시도해주세요!", Toast.LENGTH_SHORT).show();
+                }
+
             }
 
         });
@@ -577,6 +593,8 @@ public class mixing extends AppCompatActivity {
                     execffmpegBinary_merge(command_merge);
                     btn_merge.setBackgroundTintList(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                     btn_merge.setTextColor(Color.parseColor("#FFFFFF"));
+                    btn_merge.setBackgroundTintList(null);
+                    btn_merge.setTextColor(ContextCompat.getColorStateList(getApplicationContext(), R.color.colorPrimary));
                     loadingDialog.startLoadingDialog();
                 }
                 else{
@@ -596,8 +614,8 @@ public class mixing extends AppCompatActivity {
 
                 if(files.exists()==true) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mixing.this);
-                    builder1.setMessage("선택하신 값 : \n\n배경 볼륨 : "+bv+"\n필터 : " + mf + "\n믹싱 볼륨 : " + mv +
-                            "\nEQ : " + meq +"\nComp : " + mc +"\nHighPass : " + mh +"\n에코: " + meh)
+                    builder1.setMessage("선택하신 값 : \n\n배경 볼륨 : "+bv+"\nFilter : " + mf + "\n믹싱 Volume : " + mv +
+                            "\nEQ : " + meq +"\nComp : " + mc +"\nHighPass : " + mh +"\nEcho: " + meh)
                             .setTitle("저장하시겠습니까?")
                             .setCancelable(false)
                             .setPositiveButton("확인", new DialogInterface.OnClickListener() {
@@ -848,6 +866,8 @@ public class mixing extends AppCompatActivity {
                             Intent intent = new Intent(mixing.this, PreviewActivity.class);
                             intent.putExtra("final_path",save);
                             startActivity(intent);
+                            overridePendingTransition(0, 0);
+
 
                             break;
                     }

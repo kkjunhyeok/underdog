@@ -91,6 +91,8 @@ public class Mp4ComposeActivity extends AppCompatActivity {
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             intent.setDataAndType(uri, "video/mp4");
             startActivity(intent);
+            overridePendingTransition(0, 0);
+
         });
 
         findViewById(R.id.btn_filter).setOnClickListener(v -> {

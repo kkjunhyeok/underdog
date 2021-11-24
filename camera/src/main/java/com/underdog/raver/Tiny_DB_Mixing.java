@@ -36,7 +36,7 @@ public class Tiny_DB_Mixing extends AppCompatActivity {
         super.onStart();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("미완성곡 편집을 시작합니다. 편집할 부분을 선택해주세요.")
+        builder.setMessage("편집 모드를 선택해주세요.")
                 .setTitle("편집 모드")
                 .setCancelable(false)
                 .setNeutralButton("동영상 자르기", new DialogInterface.OnClickListener() {
@@ -44,13 +44,16 @@ public class Tiny_DB_Mixing extends AppCompatActivity {
                         Intent mixIntent = new Intent(Tiny_DB_Mixing.this,videoTrimmer.class);
                         mixIntent.putExtra("uri_mp3", uri_mp3_path).putExtra("videoPath", mp4_path);
                         startActivity(mixIntent);
+                        overridePendingTransition(0, 0);
                     }
                 })
-                .setPositiveButton("믹싱", new DialogInterface.OnClickListener() {
+                .setPositiveButton("사운드 믹싱", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         Intent mixIntent = new Intent(Tiny_DB_Mixing.this, mixing.class);
                         mixIntent.putExtra("mp3Path", mp3_trim_path).putExtra("videoPath", mp4_trim_path);
                         startActivity(mixIntent);
+                        overridePendingTransition(0, 0);
+
                     }
                 });
         // onclick 속에 intent 바꿔주기
@@ -64,6 +67,7 @@ public class Tiny_DB_Mixing extends AppCompatActivity {
                     if(count > 1) {
                         Intent intent = new Intent(Tiny_DB_Mixing.this, Tiny_DB.class);
                         startActivity(intent);
+                        overridePendingTransition(0, 0);
                     }
                     else {
                         Toast.makeText(getApplicationContext(),"한번 더 누르면 뒤로 돌아갑니다.",Toast.LENGTH_SHORT).show();
@@ -82,7 +86,7 @@ public class Tiny_DB_Mixing extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new);
         getSupportActionBar().setTitle("이전 작업 믹싱");
-
+        getSupportActionBar().hide();
 
         String txt_path = getIntent().getStringExtra("name");
 

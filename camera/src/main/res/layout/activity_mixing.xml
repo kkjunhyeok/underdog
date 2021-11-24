@@ -58,7 +58,7 @@
                 android:gravity="center_vertical"
                 android:text="설정"
                 android:textAlignment="center"
-                android:textColor="#000" />
+                android:textColor="@color/colorPrimary" />
 
         </LinearLayout>
 
@@ -71,6 +71,8 @@
                 android:id="@+id/play_bgm"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="8"
                 android:background="@drawable/btn_background_shadow"
                 android:fontFamily="@font/nanumsquare_ac_b"
@@ -370,7 +372,7 @@
             android:gravity="center_vertical"
             android:text="설정"
             android:textAlignment="center"
-            android:textColor="#000" />
+            android:textColor="@color/colorPrimary" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -382,6 +384,8 @@
                 android:id="@+id/play_mix"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
                 android:layout_weight="8"
                 android:background="@drawable/btn_background_shadow"
                 android:fontFamily="@font/nanumsquare_ac_b"
@@ -416,7 +420,7 @@
             android:background="@drawable/btn_background_shadow"
             android:fontFamily="@font/nanumsquare_ac_r"
             android:text="같이 듣기"
-            android:textColor="#000" />
+            android:textColor="@color/colorPrimary" />
 
         <Button
             android:id="@+id/btn_save"
@@ -427,7 +431,7 @@
             android:background="@drawable/btn_background_shadow"
             android:fontFamily="@font/nanumsquare_ac_r"
             android:text="저장"
-            android:textColor="#000" />
+            android:textColor="@color/colorPrimary" />
 
     </LinearLayout>
 

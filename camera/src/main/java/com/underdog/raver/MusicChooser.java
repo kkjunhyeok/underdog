@@ -73,6 +73,7 @@ public class MusicChooser extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int i, long id) {
                 startActivity(new Intent(MusicChooser.this, PortraitCameraActivity.class).putExtra("music_path",songsList.get(i).DataPath));
+                overridePendingTransition(0, 0);
 
             }
         });
@@ -183,7 +184,7 @@ public class MusicChooser extends AppCompatActivity {
 
 
     // Album ID로 부터 Bitmap 이미지를 생성해 리턴해 주는 메소드
-    /*private static final BitmapFactory.Options sBitmapOptionsCache = new BitmapFactory.Options();
+    private static final BitmapFactory.Options sBitmapOptionsCache = new BitmapFactory.Options();
     private static final Uri sArtworkUri = Uri.parse("content://media/external/audio/albumart");
 
     // Get album art for specified album. This method will not try to
@@ -235,7 +236,7 @@ public class MusicChooser extends AppCompatActivity {
             }
         }
         return null;
-    }*/
+    }
 
     public class Song_Item {
         private long mId; // 오디오 고유 ID
