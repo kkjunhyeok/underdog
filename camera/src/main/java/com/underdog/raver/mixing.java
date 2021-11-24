@@ -612,7 +612,7 @@ public class mixing extends AppCompatActivity {
 
                 if(files.exists()==true) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(mixing.this);
-                    builder1.setMessage("선택하신 값 : \n\n배경 볼륨 : "+bv+"\nFilter : " + mf + "\n믹싱 Volume : " + mv +
+                    builder1.setMessage("선택하신 값 \n\n배경 볼륨 : "+bv+"\nPreset : " + mf + "\n믹싱 Volume : " + mv +
                             "\nEQ : " + meq +"\nComp : " + mc +"\nHighPass : " + mh +"\nEcho: " + meh)
                             .setTitle("저장하시겠습니까?")
                             .setCancelable(false)

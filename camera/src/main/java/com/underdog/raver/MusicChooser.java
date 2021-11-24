@@ -159,10 +159,10 @@ public class MusicChooser extends AppCompatActivity {
             final Song_Item songItem = songsList.get(position);
 
             // 아이템 내 각 위젯에 데이터 반영
-            /*Bitmap albumArt = MusicChooser.getArtworkQuick(context, (int)songItem.getAlbumId(), 100, 100);
+            Bitmap albumArt = MusicChooser.getArtworkQuick(context, (int)songItem.getAlbumId(), 100, 100);
             if(albumArt != null){
                 viewHolder.mImgAlbumArt.setImageBitmap(albumArt);
-            }*/
+            }
 
             viewHolder.mTitle.setText(songItem.getTitle());
             viewHolder.mSubTitle.setText(songItem.getArtist());
