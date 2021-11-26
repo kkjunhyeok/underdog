@@ -203,7 +203,7 @@
                     android:layout_weight="3.3"
                     android:fontFamily="@font/nanumsquare_ac_r"
                     android:gravity="right"
-                    android:text="50" />
+                    android:text="80" />
 
                 <SeekBar
                     android:id="@+id/filter1"
@@ -239,7 +239,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
                     android:fontFamily="@font/nanumsquare_ac_r"
-                    android:text="50"
+                    android:text="70"
                     android:textAlignment="viewEnd" />
 
                 <SeekBar
@@ -275,7 +275,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
                     android:fontFamily="@font/nanumsquare_ac_r"
-                    android:text="50"
+                    android:text="90"
                     android:textAlignment="viewEnd" />
 
                 <SeekBar
@@ -311,7 +311,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
                     android:fontFamily="@font/nanumsquare_ac_r"
-                    android:text="50"
+                    android:text="40"
                     android:textAlignment="viewEnd" />
 
                 <SeekBar
@@ -348,7 +348,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="3.3"
                     android:fontFamily="@font/nanumsquare_ac_r"
-                    android:text="50"
+                    android:text="30"
                     android:textAlignment="viewEnd" />
 
                 <SeekBar

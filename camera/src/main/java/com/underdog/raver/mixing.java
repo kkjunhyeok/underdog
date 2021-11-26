@@ -152,7 +152,11 @@ public class mixing extends AppCompatActivity {
 
         btn1.setBackgroundColor(ContextCompat.getColor(getApplicationContext(), R.color.colorPrimary));
         btn1.setTextColor(Color.parseColor("#FFFFFF"));
-
+        filter1.setProgress(80);
+        filter2.setProgress(70);
+        filter3.setProgress(90);
+        filter4.setProgress(40);
+        filter5.setProgress(30);
 
 
         //볼륨조절쪽
@@ -481,11 +485,11 @@ public class mixing extends AppCompatActivity {
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
                 mixpreset=1;
-                filter1.setProgress(50);
-                filter2.setProgress(50);
-                filter3.setProgress(50);
-                filter4.setProgress(50);
-                filter5.setProgress(50);
+                filter1.setProgress(80);
+                filter2.setProgress(70);
+                filter3.setProgress(90);
+                filter4.setProgress(40);
+                filter5.setProgress(30);
 
             }
         });
@@ -504,11 +508,11 @@ public class mixing extends AppCompatActivity {
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
                 mixpreset=2;
-                filter1.setProgress(50);
-                filter2.setProgress(50);
-                filter3.setProgress(50);
-                filter4.setProgress(50);
-                filter5.setProgress(50);
+                filter1.setProgress(60);
+                filter2.setProgress(60);
+                filter3.setProgress(1000);
+                filter4.setProgress(100);
+                filter5.setProgress(20);
 
             }
         });
@@ -527,11 +531,11 @@ public class mixing extends AppCompatActivity {
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
                 mixpreset=3;
-                filter1.setProgress(50);
-                filter2.setProgress(50);
-                filter3.setProgress(50);
-                filter4.setProgress(50);
-                filter5.setProgress(50);
+                filter1.setProgress(90);
+                filter2.setProgress(20);
+                filter3.setProgress(80);
+                filter4.setProgress(80);
+                filter5.setProgress(10);
             }
         });
         btn4.setOnClickListener(new View.OnClickListener() {
@@ -549,11 +553,11 @@ public class mixing extends AppCompatActivity {
                 btn5.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn5.setTextColor(Color.parseColor("#000000"));
                 mixpreset=4;
-                filter1.setProgress(50);
-                filter2.setProgress(50);
-                filter3.setProgress(50);
-                filter4.setProgress(50);
-                filter5.setProgress(50);
+                filter1.setProgress(100);
+                filter2.setProgress(80);
+                filter3.setProgress(70);
+                filter4.setProgress(60);
+                filter5.setProgress(10);
             }
         });
         btn5.setOnClickListener(new View.OnClickListener() {
@@ -571,10 +575,10 @@ public class mixing extends AppCompatActivity {
                 btn4.setBackgroundColor(Color.parseColor("#D6D7D7"));
                 btn4.setTextColor(Color.parseColor("#000000"));
                 mixpreset=5;
-                filter1.setProgress(50);
-                filter2.setProgress(50);
-                filter3.setProgress(50);
-                filter4.setProgress(50);
+                filter1.setProgress(85);
+                filter2.setProgress(70);
+                filter3.setProgress(80);
+                filter4.setProgress(40);
                 filter5.setProgress(50);
             }
         });
